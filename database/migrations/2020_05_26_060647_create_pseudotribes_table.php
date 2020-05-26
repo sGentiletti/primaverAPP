@@ -15,7 +15,7 @@ class CreatePseudotribesTable extends Migration
     {
         Schema::create('pseudotribes', function (Blueprint $table) {
             $table->id();
-            $table->integer('cacique_id');
+            $table->foreignId('cacique_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

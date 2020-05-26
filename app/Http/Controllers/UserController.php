@@ -19,10 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-
-        $indians_id = PseudoTribes::orderBy('created_at', 'asc')->where('cacique_id', Auth::user()->id)->get();
         
-        //dd($indians_id);
 
         return view('my-account');
     }
