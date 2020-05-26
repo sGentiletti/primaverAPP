@@ -19,8 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/mi-cuenta', 'UserController@index')->name('my-account');
 
-Auth::routes();
+Route::get('/mi-cuenta/agregar-indio', 'UserController@create')->name('create-indian');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/mi-cuenta/agregar-indio', 'UserController@store')->name('store-indian');
+
+// Registration Routes...
+Route::get('regitrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('regitrar-cacique', 'Auth\RegisterController@register');
