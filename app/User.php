@@ -10,9 +10,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public function users()
+    public function parent()
     {
-        return $this->hasMany('App\User', 'id', 'user_id');
+        return $this->belongsTo('User', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('User', 'parent_id');
     }
 
     /**
@@ -21,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'dni', 'birthdate', 'address', 'phone', 'school', 'grade', 'email', 'password',
+        'name', 'parent_id', 'surname', 'dni', 'birthdate', 'address', 'phone', 'school', 'grade', 'email', 'password',
     ];
 
     /**
