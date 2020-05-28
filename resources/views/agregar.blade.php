@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header"><b>Agregar indio</b></div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('store-indian') }}">
+                    <form method="POST" action="{{ route('agregarAction') }}">
                         @csrf
 
                         <div class="form-group row">

@@ -35,16 +35,15 @@
                     @endphp
                     <td>{{$indio->name}}</td>
                     <td>{{$indio->surname}}</td>
-                    <td>{{$indio->email}}</td>
+                    <td>{{$indio->dni}}</td>
                   </tr>
                 @endforeach
               </tbody>
             </table>
-
           </div>
         </div>
         <br><br><br>
-        <a href="{{ route('create-indian') }}" class="btn btn-primary">
+        <a href="{{ route('agregar') }}" class="btn btn-primary">
           Agregar indio
         </a>
       </div>

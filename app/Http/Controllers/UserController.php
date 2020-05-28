@@ -19,13 +19,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('my-account');
+        return view('perfil');
     }
 
     public function verIndios(){
-      $indios = User::where("parent_id", "=", Auth::user()->id)->get(); //Este query hace: Select todo de la tabla Usuarios where el parent_id sea igual al usuario logeado. (Devuelve los hijos del usuario logeado, osea los indios que registró)
 
-      return view('my-account', compact('indios'));
+      $indios = User::find(Auth::user()->id)->indios; //Este query hace: Select todo de la tabla Usuarios where el parent_id sea igual al usuario logeado. (Devuelve los hijos del usuario logeado, osea los indios que registró)
+
+      return view('perfil', compact('indios'));
     }
 
     /**
@@ -33,9 +34,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showForm()
     {
-        return view('create-indian');
+        return view('agregar');
     }
 
     /**
@@ -55,12 +56,7 @@ class UserController extends Controller
             'password' => Hash::make($request['dni'] . '_2020')
         ]);
 
-        // $pseudoTribe = PseudoTribes::create([
-        //     'cacique_id' => Auth::user()->id,
-        //     'user_id' => $user->id
-        // ]);
-
-        return redirect('mi-cuenta');
+        return redirect('perfil');
     }
 
     /**

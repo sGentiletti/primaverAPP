@@ -19,13 +19,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/mi-cuenta', 'UserController@index')->name('my-account')->middleware("auth");
+Route::get('/perfil', 'UserController@index')->name('perfil')->middleware("auth");
 //mostrar indios del cacique
-Route::get('/mi-cuenta', 'UserController@verIndios')->name('my-account')->middleware("auth");
+Route::get('/perfil', 'UserController@verIndios')->name('perfil')->middleware("auth");
 
-Route::get('/mi-cuenta/agregar-indio', 'UserController@create')->name('create-indian')->middleware("auth");
+Route::get('/perfil/agregar', 'UserController@showForm')->name('agregar')->middleware("auth");
 
-Route::post('/mi-cuenta/agregar-indio', 'UserController@store')->name('store-indian')->middleware("auth");
+Route::post('/perfil', 'UserController@store')->name('agregarAction')->middleware("auth");
+
 
 // Registration Routes...
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');

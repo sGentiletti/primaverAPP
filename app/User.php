@@ -10,14 +10,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public function parent()
+    public function cacique()
     {
-        return $this->belongsTo('User', 'parent_id');
+        return $this->belongsTo('App\User');
     }
 
-    public function children()
+    public function indios()
     {
-        return $this->hasMany('User', 'parent_id');
+        return $this->hasMany('App\User', 'parent_id');
     }
 
     /**
