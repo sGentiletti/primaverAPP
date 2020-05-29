@@ -46,6 +46,10 @@
         <a href="{{ route('agregar') }}" class="btn btn-primary">
           Agregar indio
         </a>
+        <br><br><br>
+        <a href="{{ route('confirmarAction') }}" class="btn btn-primary">
+          Confirmar preinscripción
+        </a>
       </div>
     </div>
   </div>

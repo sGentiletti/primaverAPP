@@ -20,6 +20,11 @@ class User extends Authenticatable
         return $this->hasMany('App\User', 'parent_id');
     }
 
+    public function tribu()
+    {
+        return $this->hasOne('App\Tribu');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

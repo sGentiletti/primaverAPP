@@ -27,6 +27,7 @@ Route::get('/perfil/agregar', 'UserController@showForm')->name('agregar')->middl
 
 Route::post('/perfil', 'UserController@store')->name('agregarAction')->middleware("auth");
 
+Route::get('/perfil/confirmar', 'TribuController@store')->name('confirmarAction')->middleware("auth");
 
 // Registration Routes...
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
