@@ -26,7 +26,10 @@ Route::get('/perfil', 'UserController@verIndios')->name('perfil')->middleware("a
 Route::get('/perfil/agregar', 'UserController@showForm')->name('agregar')->middleware("auth");
 
 Route::post('/perfil', 'UserController@store')->name('agregarAction')->middleware("auth");
-
+//formulario para actualizar los datos del indio que se pasen por parametro
+Route::get('/perfil/detalle/{id}', 'UserController@detalleIndio')->name('detalleIndio')->middleware("auth");
+//accion de actualizar indio. No tiene vista, solo llama a la funcion.
+Route::post('/perfil/detalle/actualizar/{id}', 'UserController@actualizarIndio')->name('detalleAction')->middleware("auth");
 
 // Registration Routes...
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
