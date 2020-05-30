@@ -63,6 +63,10 @@
         <a href="{{ route('agregar') }}" class="btn btn-primary">
           Agregar Persona
         </a>
+        <br><br><br>
+        <a href="{{ route('confirmarAction') }}" class="btn btn-primary">
+          Confirmar preinscripción
+        </a>
       </div>
     </div>
   </div>
