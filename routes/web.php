@@ -30,6 +30,10 @@ Route::post('/perfil', 'UserController@store')->name('agregarAction')->middlewar
 Route::get('/perfil/detalle/{id}', 'UserController@detalleIndio')->name('detalleIndio')->middleware("auth");
 //accion de actualizar indio. No tiene vista, solo llama a la funcion.
 Route::post('/perfil/detalle/actualizar/{id}', 'UserController@actualizarIndio')->name('detalleAction')->middleware("auth");
+//Acción de eliminar un indio.
+Route::get('/perfil/detalle/eliminar/{id}', 'UserController@eliminarIndio')->name('eliminarIndioAction')->middleware("auth");
+//Listado de tribus para Admin
+Route::get('/listado', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
 
 // Registration Routes...
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');

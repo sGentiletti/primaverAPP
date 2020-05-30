@@ -5,6 +5,9 @@
     <div class="row justify-content-center">
       <div class="col-md-8 text-center">
         <div class="card">
+          @if (Auth::user()->parent_id != NULL)
+            Este usuario tiene un cacique, no debería estar aca.
+          @endif
           <div class="card-header"><b>Cacique</b></div>
           <div class="card-body">
             {{ Auth::user()->name }}
@@ -41,7 +44,9 @@
                       <button type="button" name="button">
                         <a href="{{route('detalleIndio', ['id' => $indio->id])}}">Ver</a>
                       </button>
-                      <button type="button" name="button">Eliminar</button>
+                      <button type="button" name="button">
+                        <a href="{{route('eliminarIndioAction', ['id' => $indio->id])}}">Eliminar</a>
+                      </button>
                     </td>
                   </tr>
                 @endforeach
@@ -56,7 +61,7 @@
         </div>
         <br><br><br>
         <a href="{{ route('agregar') }}" class="btn btn-primary">
-          Agregar indio
+          Agregar Persona
         </a>
       </div>
     </div>
