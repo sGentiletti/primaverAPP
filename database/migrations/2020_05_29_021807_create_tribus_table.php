@@ -15,7 +15,7 @@ class CreateTribusTable extends Migration
     {
         Schema::create('tribus', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade');
             $table->string('num_tribu')->unique();
             $table->timestamps();
         });
