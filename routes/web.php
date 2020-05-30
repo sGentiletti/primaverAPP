@@ -33,7 +33,9 @@ Route::post('/perfil/detalle/actualizar/{id}', 'UserController@actualizarIndio')
 //Acción de eliminar un indio.
 Route::get('/perfil/detalle/eliminar/{id}', 'UserController@eliminarIndio')->name('eliminarIndioAction')->middleware("auth");
 //Listado de tribus para Admin
-Route::get('/listado', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
+Route::get('/listado', 'UserController@mostrarListadoCaciques')->name('listadoCaciques')->middleware("auth");
+//Ver info de la Tribu del Cacique seleccionado
+Route::get('/listado/detalle/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
 //Accion de confirmar tribu como Cacique
 Route::get('/perfil/confirmar', 'TribuController@store')->name('confirmarAction')->middleware("auth");
 

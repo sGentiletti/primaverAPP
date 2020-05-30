@@ -89,10 +89,16 @@ class UserController extends Controller
       return $this->verIndios();
     }
 
-    public function mostrarListadoTribus(){
+    public function mostrarListadoCaciques(){
       $caciques = User::where("parent_id", NULL)->get();
-      
-      return view('listado', compact('caciques'));
+
+      return view('ADMlistado', compact('caciques'));
+    }
+
+    public function mostrarListadoTribus($id){
+      $indios = User::find($id)->indios;
+      $cacique = User::find($id);
+      return view('ADMlistadoTribu', compact('indios', 'cacique'));
     }
 
     /**
