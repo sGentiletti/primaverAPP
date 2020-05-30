@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     public function cacique()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'parent_id');
     }
 
     public function indios()
