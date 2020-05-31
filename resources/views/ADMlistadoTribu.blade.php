@@ -31,6 +31,11 @@
                 </tr>
               @endforeach
             </tbody>
+            @if ($cacique->parent_id != NULL)
+              <div class="alert alert-danger" role="alert">
+                ERROR: Esta persona no es cacique. Es un indio y tiene designado como cacique a <a href="{{route('listadoTribus', ['id' => App\User::find($cacique->id)->cacique->id])}}">{{App\User::find($cacique->id)->cacique->name}} {{App\User::find($cacique->id)->cacique->surname}}</a>
+              </div>
+            @endif
           </table>
         </div>
             <a class="btn btn-primary" href="{{route('listadoCaciques')}}">Volver Atrás</a>
