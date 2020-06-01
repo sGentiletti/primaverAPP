@@ -28,7 +28,7 @@ class TribuController extends Controller
         //
     }
 
-    static function calculateNumTribu($lastConfirmed)
+    public static function calculateNumTribu($lastConfirmed)
     {
         if (!$lastConfirmed) {
             return 'SE01';
@@ -39,7 +39,7 @@ class TribuController extends Controller
         $preFix = substr($previouLastConfirmed, 0, 2);
         $num = substr($previouLastConfirmed, 2);
 
-        if($preFix === 'SE') {
+        if ($preFix === 'SE') {
             return 'JU' . $num;
         } else {
             $newNumTribu = 'SE' . str_pad(($num + 1), 2, "0", STR_PAD_LEFT);
