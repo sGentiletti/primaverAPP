@@ -54,9 +54,10 @@ class RegisterController extends Controller
             'required' => ':attribute requerido',
             'digits_between' => 'El :attribute :input no tiene entre :min y :max números',
             'unique' => 'El :attribute :input ya se encuentra registrado',
-            'email' => 'Ups! Casi pero no... Borraste el type email del HTML o sea la validacion de front, igual lo validamos en el back 😜 pero igual hay premio! Comunicate con Sergio Gentiletti o Emi Vargas y mostranos una captura de esto.',
-            'password.min' => 'Minimo 8 caracteres, dale que esto no lo hicimos complicado', 
-            'password.confirmed' => 'Te quedaron distintas las contraseñas intenta de nuevo, tu puedes!', 
+            'dni.unique' => 'Ya hay registrado un indio con este DNI. Te damos otra oportunidad 😁',
+            'email' => 'Ups! Casi pero no... te salteaste la validacion de front, pero igual lo validamos en el back 😜',
+            'password.min' => 'Minimo 8 caracteres, dale que esto no lo hicimos complicado',
+            'password.confirmed' => 'Te quedaron distintas las contraseñas intenta de nuevo, vos podes!'
         ];
 
         return Validator::make($data, [

@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @if(Auth::user()->parent_id != NULL)
+            Este usuario no es un Cacique, no debería estar aca 👊
+        @else    
         <div class="col-md-8 text-center">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        @if(Auth::user()->parent_id != NULL)
-                        Este usuario tiene un cacique, no debería estar aca.
-                        @endif
                         <div class="card-header"><b>Cacique</b></div>
                         <div class="card-body">
                             {{ Auth::user()->name }} {{ Auth::user()->surname }}
@@ -136,6 +136,7 @@
             @endif
             @endif
         </div>
+        @endif
     </div>
 </div>
 @endsection
