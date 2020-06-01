@@ -89,54 +89,44 @@ class UserController extends Controller
       return $this->verIndios();
     }
 
-    public function mostrarListadoTribus(){
+    public function mostrarListadoCaciques(){
       $caciques = User::where("parent_id", NULL)->get();
-      
-      return view('listado', compact('caciques'));
+
+      return view('ADMlistado', compact('caciques'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function mostrarListadoTribus($id){
+      $indios = User::find($id)->indios;
+      $cacique = User::find($id);
+      return view('ADMlistadoTribu', compact('indios', 'cacique'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+
+// AAA               DDDDDDDDDDDDD        MMMMMMMM               MMMMMMMM
+// A:::A              D::::::::::::DDD     M:::::::M             M:::::::M
+// A:::::A             D:::::::::::::::DD   M::::::::M           M::::::::M
+// A:::::::A            DDD:::::DDDDD:::::D  M:::::::::M         M:::::::::M
+// A:::::::::A             D:::::D    D:::::D M::::::::::M       M::::::::::M
+// A:::::A:::::A            D:::::D     D:::::DM:::::::::::M     M:::::::::::M
+// A:::::A A:::::A           D:::::D     D:::::DM:::::::M::::M   M::::M:::::::M
+// A:::::A   A:::::A          D:::::D     D:::::DM::::::M M::::M M::::M M::::::M
+// A:::::A     A:::::A         D:::::D     D:::::DM::::::M  M::::M::::M  M::::::M
+// A:::::AAAAAAAAA:::::A        D:::::D     D:::::DM::::::M   M:::::::M   M::::::M
+// A:::::::::::::::::::::A       D:::::D     D:::::DM::::::M    M:::::M    M::::::M
+// A:::::AAAAAAAAAAAAA:::::A      D:::::D    D:::::D M::::::M     MMMMM     M::::::M
+// A:::::A             A:::::A   DDD:::::DDDDD:::::D  M::::::M               M::::::M
+// A:::::A               A:::::A  D:::::::::::::::DD   M::::::M               M::::::M
+// A:::::A                 A:::::A D::::::::::::DDD     M::::::M               M::::::M
+// AAAAAAA                   AAAAAAADDDDDDDDDDDDD        MMMMMMMM               MMMMMMMM
+
+
+    public function adminPanel(){
+      return view('ADMpanel');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    public function buscarPersonaPorDni(Request $request){
+      $indio = User::where('dni', $request->dni)->get();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+      return view('ADMpanel', compact('indio'));
     }
 }
