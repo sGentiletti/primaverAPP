@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->string('surname');
-            $table->integer('dni')->unique();
+            $table->string('dni', 8)->unique();
+            $table->char('gender', 1);
             $table->date('birthdate')->nullable();
             $table->text('address')->nullable();
             $table->text('city')->nullable();

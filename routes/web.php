@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::get('/perfil', 'UserController@index')->name('perfil')->middleware("auth");
 //mostrar indios del cacique
-Route::get('/perfil', 'UserController@verIndios')->name('perfil')->middleware("auth");
+Route::get('/perfil', 'UserController@obtenerDatos')->name('perfil')->middleware("auth");
 
 Route::get('/perfil/agregar', 'UserController@showForm')->name('agregar')->middleware("auth");
 
