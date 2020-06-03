@@ -92,7 +92,7 @@ class UserController extends Controller
 
     protected function validator(Request $request, $indio = 0)
     {
-        $id = $indio ? $indio->id : 0; //El ID es para validar con la Rule para que no tire error con "unique" en DNI y email.
+        $id = $indio ? $indio->id : 0;
 
         $messages = [
         'required' => ':attribute requerido',
@@ -157,6 +157,7 @@ class UserController extends Controller
     public function actualizarIndio(Request $request, $id)
     {
         $indio = User::find($id); //Instanciamos el modelo User a buscar en la variable $indio
+        dd($request);
         $validatedData = $this->validator($request, $indio);
 
         $indio->name = $validatedData['name']; //Cambiamos sus atributos
@@ -196,69 +197,34 @@ class UserController extends Controller
     // AAAAAAA                   AAAAAAADDDDDDDDDDDDD        MMMMMMMM               MMMMMMMM
 
 
-    public function registrarCacique(Request $request){
-      $cacique = User::create([
-        'parent_id' => NULL,
-        'name' => $request['name'],
-        'surname' => $request['surname'],
-        'gender' => $request['gender'],
-        'birthdate' => $request['birthdate'],
-        'address' => $request['address'],
-        'city' => $request['city'],
-        'between_streets' => $request['between_streets'],
-        'phone' => $request['phone'],
-        'cel' => $request['cel'],
-        'school' => $request['school'],
-        'grade' => $request['grade'],
-        'email' => $request['email'],
-        'dni' => $request['dni'],
-        'password' => Hash::make($request['dni'])
-      ]);
+    public function adminPanel()
+    {
+        return view('ADMpanel');
+    }
 
-      return $this->mostrarListadoCaciques();
+    public function registrarCacique(){
+
     }
 
     public function buscarPersonaPorDni(Request $request)
     {
       $persona = User::where('dni', $request->dni)->first(); //First hace que no haya que usar una foreach para recorrer la coleccion.
 
-      return view('adm/detallePersona', compact('persona'));
-    }
-
-    public function actualizarDni(Request $request){
-      $persona = User::where('dni', $request->dni)->first(); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
-
-      $persona->name = $request['name'];
-      $persona->surname = $request['surname'];
-      $persona->gender = $request['gender'];
-      $persona->birthdate = $request['birthdate'];
-      $persona->address = $request['address'];
-      $persona->city = $request['city'];
-      $persona->between_streets = $request['between_streets'];
-      $persona->phone = $request['phone'];
-      $persona->cel = $request['cel'];
-      $persona->school = $request['school'];
-      $persona->grade = $request['grade'];
-      $persona->email = $request['email'];
-
-      $persona->save();
-
-      $persona = User::where('dni', $request->dni)->first(); //Despues de crearla la devolvemos a la vista.
-      return view('adm/detallePersona', compact('persona'));
+      return view('ADMdetallePersona', compact('persona'));
     }
 
     public function mostrarListadoCaciques()
     {
         $caciques = User::where("parent_id", null)->get();
 
-        return view('adm/panel', compact('caciques'));
+        return view('ADMpanel', compact('caciques'));
     }
 
     public function mostrarListadoTribus($id)
     {
         $indios = User::find($id)->indios;
         $cacique = User::find($id);
-        return view('adm/listadoTribu', compact('indios', 'cacique'));
+        return view('ADMlistadoTribu', compact('indios', 'cacique'));
     }
 
 }

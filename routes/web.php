@@ -37,13 +37,20 @@ Route::get('/perfil/confirmar', 'TribuController@store')->name('confirmarAction'
 
 //ADMINISTRADOR
 //Vista del panel de Administracion
-Route::get('/adminpanel', 'UserController@adminPanel')->name('adminPanel')->middleware("auth");
+Route::get('/adminpanel', function () {return view('adm/panel');})->name('adminPanel')->middleware("auth"); //Se definio aca la funcion para devolver la vista para no ponerla en el controlador de Usuario.
 //Listado de tribus para Admin
-Route::get('adminpanel/listado', 'UserController@mostrarListadoCaciques')->name('listadoCaciques')->middleware("auth");
+Route::get('/adminpanel', 'UserController@mostrarListadoCaciques')->name('listadoCaciques')->middleware("auth");
 //Ver info de la Tribu del Cacique seleccionado
-Route::get('adminpanel/listado/tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
+Route::get('adminpanel/tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
 //Buscar persona por dni
-Route::post('/adminpanel', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni')->middleware("auth");
+Route::get('/adminpanel/persona/{dni}', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni')->middleware("auth");
+//Actualizar persona por DNI
+Route::post('/adminpanel/persona/updateAction', 'UserController@actualizarDni')->name('actualizarDni')->middleware("auth");
+
+//Registrar persona
+Route::post('/adminpanel/registrar/store', 'UserController@registrarCacique')->name('registrarCacique')->middleware("auth");
+Route::get('/adminpanel/registrar', function () {return view('adm/registrarCacique');})->name('registrarCaciqueForm')->middleware("auth");
+
 
 // Registration Routes...
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
