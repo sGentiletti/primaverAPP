@@ -15,13 +15,39 @@
                 <form class="" action="{{route('buscarPersonaPorDni', ['dni'])}}" method="get">
                   @csrf
                   <div class="input-group mb-3">
-                    <input name="dni" type="number" class="form-control" placeholder="Ingrese DNI" aria-label="Ingrese DNI" aria-describedby="button-addon2">
+                    <input name="dni" type="number" class="form-control" placeholder="Buscar por DNI">
                     <div class="input-group-append">
                       <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Consultar DNI</button>
                     </div>
                   </div>
                 </form>
               </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header"><b>Estadísticas de la SeJu</b></div>
+          <div class="card-body d-flex justify-content-center">
+            <div class="row">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Indios</th>
+                    <th scope="col">Caciques/Tribus</th>
+                    <th scope="col">Tribus Confirmadas</th>
+                    <th scope="col">Tribus sin confirmar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{$datos['total']}}</td>
+                    <td>{{$datos['totalCaciques']}}</td>
+                    <td>{{$datos['totalConfirmadas']}}</td>
+                    <td>{{($datos['totalCaciques'] - $datos['totalConfirmadas'])}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -43,14 +69,21 @@
                 $n = 1;
               @endphp
               @foreach ($caciques as $cacique)
-                <tr>
+                <tr
+                  @php
+                    $foo = App\Tribu::where("user_id", $cacique->id)->first(); //Busca en el modelo de Tribu la fila con la columna "user_id" = $cacique->id. Si no encuentra nada, devuelve nulo, significando que el cacique no confirmo su tribu.
+                    if ($foo != NULL) {
+                      echo "class='table-success'";
+                    }
+                  @endphp
+                >
                   <th scope="row">{{$n}}</th>
                   @php
                     $n++;
                   @endphp
                   <td>{{$cacique->name}}</td>
                   <td>{{$cacique->surname}}</td>
-                  <td>{{$cacique->dni}}</td>
+                  <td><a href="/adminpanel/persona/{{$cacique->dni}}">{{$cacique->dni}}</a></td>
                   <td>
                     <button type="button" name="button">
                       <a href="{{route('listadoTribus', ['id' => $cacique->id])}}">Explorar</a>

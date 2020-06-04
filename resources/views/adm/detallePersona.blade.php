@@ -8,7 +8,11 @@
           <div class="card-header"><b>Procure revisar bien los datos antes de enviar el formulario.</b></div><br>
           <form class="" action="{{route('actualizarDni')}}" method="post">
             @csrf
-            {{$persona->id}}
+            @if ($flag ?? '')
+              <div class="alert alert-success" role="alert">
+                Datos actualizados correctamente. Última actualización: {{date("h:i:sa")}}
+              </div>
+            @endif
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>Nombre</label>
@@ -91,6 +95,9 @@
             </div>
           @endif
         </div>
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{{route('adminPanel')}}">Volver al Panel de Administración</a>
       </div>
     </div>
   </div>

@@ -7,6 +7,10 @@
           <div class="card-header"><b>Procure revisar bien los datos antes de enviar el formulario.</b></div><br>
           <form class="" action="{{route('registrarCacique')}}" method="post">
             @csrf
+            <div class="alert alert-primary" role="alert">
+              <h4 class="alert-heading">Información</h4>
+              <p>Este formulario es para dar de alta a un Cacique en la plataforma. Una vez agregado, podrá ingresar con su Usuario (email) y Contraseña (Numero de documento sin espacios ni puntos.)</p>
+            </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>Nombre</label>
@@ -81,7 +85,7 @@
                 <input required name="grade" value="{{old('grade')}}" type="number" class="form-control" placeholder="5">
               </div>
             </div>
-              <button type="submit" class="btn btn-primary">Actualizar</button>
+              <button type="submit" class="btn btn-primary">Registrar Cacique</button>
           </form>
         </div>
       </div>

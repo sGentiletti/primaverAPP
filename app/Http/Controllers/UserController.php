@@ -215,7 +215,7 @@ class UserController extends Controller
         'password' => Hash::make($request['dni'])
       ]);
 
-      return $this->mostrarListadoCaciques();
+      return redirect(route('adminPanel'));
     }
 
     public function buscarPersonaPorDni(Request $request)
@@ -244,21 +244,34 @@ class UserController extends Controller
       $persona->save();
 
       $persona = User::where('dni', $request->dni)->first(); //Despues de crearla la devolvemos a la vista.
-      return view('adm/detallePersona', compact('persona'));
+      $flag = 1; //Flag para mostrar la leyenda de actualizacion exitosa.
+      return view('adm/detallePersona', compact('persona', 'flag'));
     }
 
     public function mostrarListadoCaciques()
     {
-        $caciques = User::where("parent_id", null)->get();
+      /*Datos para Estadísticas*/
+      //$total = User::all()->count();
+      //$totalCaciques = User::where('parent_id', NULL)->count();
+      //$totalConfirmadas = Tribu::all()->count();
+      $datos = [
+        "total" => User::all()->count(),
+        "totalCaciques" => User::where('parent_id', NULL)->count(),
+        "totalConfirmadas" => Tribu::all()->count()
+      ];
+      /*Fin Datos Estadísticas*/
 
-        return view('adm/panel', compact('caciques'));
+      $data = User::where("parent_id", null)->get();
+      $caciques = $data->reverse(); //Revertimos la coleción para que muestre el cacique mas recientemente agregado en la primera posición.
+
+      return view('adm/panel', compact('caciques', 'datos'));
     }
 
     public function mostrarListadoTribus($id)
     {
-        $indios = User::find($id)->indios;
-        $cacique = User::find($id);
-        return view('adm/listadoTribu', compact('indios', 'cacique'));
+      $indios = User::find($id)->indios;
+      $cacique = User::find($id);
+      return view('adm/listadoTribu', compact('indios', 'cacique'));
     }
 
 }

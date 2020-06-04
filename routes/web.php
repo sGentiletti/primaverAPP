@@ -37,9 +37,7 @@ Route::get('/perfil/confirmar', 'TribuController@store')->name('confirmarAction'
 
 //ADMINISTRADOR
 //Vista del panel de Administracion
-Route::get('/adminpanel', function () {return view('adm/panel');})->name('adminPanel')->middleware("auth"); //Se definio aca la funcion para devolver la vista para no ponerla en el controlador de Usuario.
-//Listado de tribus para Admin
-Route::get('/adminpanel', 'UserController@mostrarListadoCaciques')->name('listadoCaciques')->middleware("auth");
+Route::get('/adminpanel', 'UserController@mostrarListadoCaciques')->name('adminPanel')->middleware("auth");
 //Ver info de la Tribu del Cacique seleccionado
 Route::get('adminpanel/tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
 //Buscar persona por dni
