@@ -168,7 +168,7 @@ class UserController extends Controller
     {
         $indio = User::find($id)->delete();
 
-        return $this->obtenerDatos();
+        return redirect('perfil');
     }
 
     public function mostrarListadoCaciques()
