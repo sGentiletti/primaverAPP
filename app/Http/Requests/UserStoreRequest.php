@@ -20,7 +20,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::user()->parent_id == NULL) { //Solo si es Cacique puede agregar indios. Sino, 403!
+        if (Auth::user()->parent_id == NULL && Auth::user()->is_admin === 0) { //Solo si es Cacique puede agregar indios. Sino, 403!
             return true;
         }
         else {

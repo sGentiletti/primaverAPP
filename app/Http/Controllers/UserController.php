@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -129,13 +130,14 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request) //Store guarda un indio en la DB. Funcion exclusiva para que el Cacique agregue indios.
     {
+        //dd($request);
         $user = User::create([
             'parent_id' => Auth::user()->id,
             'name' => $request['name'],
             'surname' => $request['surname'],
             'dni' => $request['dni'],
             'gender' => $request['gender'],
-            'birthdate' => $request['birthdate'],
+            'birthdate' => Carbon::parse($request['birthday']),
             'address' => $request['address'],
             'city' => $request['city'],
             'between_streets' => $request['between_streets'],
@@ -145,20 +147,20 @@ class UserController extends Controller
             'grade' => $request['grade'],
             'email' => $request['email'],
             'password' => Hash::make($request['dni']),
-        ]);
+        ]); 
         
         return redirect('perfil');
     }
 
     public function detalleIndio($id)
     {
-        $indio = User::find($id); //Buscamos en Usuarios el ID que pasamos en la ruta
+        $persona = User::find($id); //Buscamos en Usuarios el ID que pasamos en la ruta
 
-        if ($indio != null && Auth::user()->id == $indio->parent_id) { //Averiguamos si quien consulta es, efectivamente, el cacique de ese ID (persona)
-        return view('detalle', compact('indio')); //Si esa persona es su indio, le devolvemos los datos
+        if ($persona != null && Auth::user()->id == $persona->parent_id) { //Averiguamos si quien consulta es, efectivamente, el cacique de ese ID (persona)
+        return view('detalle', compact('persona')); //Si esa persona es su indio, le devolvemos los datos
         } else { //Sino, vaciamos la variable para que tire error.
-        $indio = null;
-            return view('detalle', compact('indio'));
+        $persona = null;
+            return view('detalle', compact('persona'));
         }
     }
 
@@ -259,17 +261,14 @@ class UserController extends Controller
     public function mostrarListadoCaciques()
     {
       /*Datos para Estadísticas*/
-      //$total = User::all()->count();
-      //$totalCaciques = User::where('parent_id', NULL)->count();
-      //$totalConfirmadas = Tribu::all()->count();
       $datos = [
-        "total" => User::all()->count(),
-        "totalCaciques" => User::where('parent_id', NULL)->count(),
+        "total" => User::where('parent_id', NULL)->where('is_admin', 0)->count(),
+        "totalCaciques" => User::where('parent_id', NULL)->where('is_admin', 0)->count(),
         "totalConfirmadas" => Tribu::all()->count()
       ];
       /*Fin Datos Estadísticas*/
 
-      $data = User::where("parent_id", null)->get();
+      $data = User::where("parent_id", null)->where("is_admin", 0)->get(); //Traemos caciques y que no sean admin. (Para no mostrar al admin en el listado).
       $caciques = $data->reverse(); //Revertimos la coleción para que muestre el cacique mas recientemente agregado en la primera posición.
 
       return view('adm/panel', compact('caciques', 'datos'));

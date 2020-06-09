@@ -8,244 +8,109 @@
         <div class="card">
           <div class="card-header"><b>Detalles de Indio</b></div>
           <div class="card-body">
-            @if ($indio != NULL)
+            @if ($persona != NULL)
               @if ($flag ?? '' === 1)
                 <div class="alert alert-success" role="alert">
                   Los datos se modificaron correctamente.
                 </div>
               @endif
               
-              <form class="" action="{{route('detalleAction', ['id' => $indio->id])}}" method="post">
+              <form class="" action="{{route('detalleAction', ['id' => $persona->id])}}" method="post">
                 @csrf
+                <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Nombre</label>
+                <input required name="name" value="{{$persona->name}}" type="text" class="form-control" placeholder="John">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Apellido</label>
+                <input required name="surname" value="{{$persona->surname}}" type="text" class="form-control" placeholder="Appleseed">
+              </div>
+            </div>
 
-                <div class="form-group row">
-                  <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">Nombre*</label>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>DNI</label>
+                <input required name="dni" type="number" class="form-control" placeholder="12345678" value={{$persona->dni}}>
+              </div>
 
-                    <div class="col-md-6">
-                      <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                        name="name" value="{{ old('name') }}" required autofocus>
+              <div class="form-group col-md-6">
+                <label>Sexo</label>
+                <select required name="gender" id="inputState" class="form-control">
+                  <option value='' {{($persona->gender == NULL) ? 'selected' : ''}}>Seleccione un sexo</option>
+                  <option value='M' {{($persona->gender == 'M') ? 'selected' : ''}}>Masculino</option>
+                  <option value='F' {{($persona->gender == 'F') ? 'selected' : ''}}>Femenino</option>
+                </select>
+              </div>
+            </div>
 
-                        @error('name')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
-                    </div>
-                  </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Fecha de Nacimiento</label>
+                <input required name="birthdate" value="{{$persona->birthdate}}" type="date" class="form-control" placeholder="DD/MM/AAAA">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Dirección de Correo Electrónico</label>
+                <input required name="email" value="{{$persona->email}}" type="email" class="form-control" placeholder="johnappleseed@sejuturdera.com.ar">
+              </div>
+            </div>
 
-                  <div class="form-group row">
-                    <label for="surname" class="col-md-4 col-form-label text-md-right">Apellido*</label>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Dirección</label>
+                <input required name="address" value="{{$persona->address}}" type="text" class="form-control" placeholder="Suipacha 110">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Localidad</label>
+                <input required name="city" value="{{$persona->city}}" type="text" class="form-control" placeholder="Turdera">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Entrecalles (si aplica)</label>
+                <input name="between_streets" value="{{$persona->between_streets}}" type="text" class="form-control" placeholder="Zapiola y Padre Bruno">
+              </div>
+            </div>
 
-                    <div class="col-md-6">
-                     <input id="surname" type="text"
-                      class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autofocus>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Teléfono</label>
+                <input name="phone" value="{{$persona->phone}}" type="number" class="form-control" placeholder="Sin guiones ni espacios">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Celular</label>
+                <input required name="cel" value="{{$persona->cel}}" type="number" class="form-control" placeholder="Sin guiones ni espacios">
+              </div>
+            </div>
 
-                        @error('surname')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
-                    </div>
-                  </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Escuela</label>
+                <input required name="school" value="{{$persona->school}}" type="text" class="form-control" placeholder="Instituto Santa Inés">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Año (Sólo numeros)</label>
+                <input required name="grade" value="{{$persona->grade}}" type="number" class="form-control" placeholder="5">
+              </div>
+            </div>
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+              </form>
 
-                  <div class="form-group row">
-                    <label for="dni" class="col-md-4 col-form-label text-md-right">DNI*</label>
 
-                    <div class="col-md-6">
-                      <input id="dni" type="tel" class="form-control @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autofocus>
-
-                        @error('dni')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
-                      </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label for="gender" class="col-md-4 col-form-label text-md-right">Género*</label>
-
-                    <div class="col-md-6 d-flex align-items-center">
-
-                    <div class="form-check mr-3">
-                      <input class="form-check-input" type="radio" name="gender" id="genderF" value="F"
-                      @if (old('gender')==='F' ) checked @endif>
-                        <label class="form-check-label" for="genderF">F</label>
-                    </div>
-
-                    <div class="form-check ml-3">
-                      <input class="form-check-input" type="radio" name="gender" id="genderM" value="M"
-                        @if (old('gender')==='M' ) checked @endif>
-                          <label class="form-check-label" for="genderM">M</label>
-                    </div>
-
-                        @error('gender')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mail') }}*</label>
-
-                      <div class="col-md-6">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                          name="email" value="{{ old('email') }}" required >
-
-                          @error('email')
-                            <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
-
-                        <div class="col-md-6">
-                          <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror"
-                            name="birthday" value="{{ old('birthday') }}" required autofocus>
-
-                            @error('birthday')
-                              <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                              </span>
-                            @enderror
-                          </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="address" class="col-md-4 col-form-label text-md-right">Dirección*</label>
-
-                        <div class="col-md-6">
-                          <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
-                            name="address" value="{{ old('address') }}" required autofocus>
-
-                            @error('address')
-                              <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                              </span>
-                            @enderror
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <label for="between_streets" class="col-md-4 col-form-label text-md-right">Entrecalles</label>
-
-                          <div class="col-md-6">
-                            <input id="between_streets" type="text" class="form-control @error('between_streets') is-invalid @enderror"
-                              name="between_streets" value="{{ old('between_streets') }}" autofocus>
-
-                              @error('between_streets')
-                                <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                                </span>
-                              @enderror
-                            </div>
-                          </div>
-
-                          <div class="form-group row">
-                            <label for="city" class="col-md-4 col-form-label text-md-right">Localidad*</label>
-
-                            <div class="col-md-6">
-                              <input id="city" type="text" class="form-control @error('city') is-invalid @enderror"
-                                name="city" value="{{ old('city') }}" required autofocus>
-
-                                @error('city')
-                                  <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                  </span>
-                                @enderror
-                              </div>
-                            </div>
-
-                            <div class="form-group row">
-                              <label for="phone" class="col-md-4 col-form-label text-md-right">Telefono de Línea</label>
-
-                              <div class="col-md-6">
-                                <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror"
-                                  name="phone" value="{{ old('phone') }}" autofocus>
-
-                                  @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                    </span>
-                                  @enderror
-                                </div>
-                              </div>
-
-                              <div class="form-group row">
-                                <label for="cel" class="col-md-4 col-form-label text-md-right">Celular*</label>
-
-                                <div class="col-md-6">
-                                  <input id="cel" type="number" class="form-control @error('cel') is-invalid @enderror"
-                                    name="cel" value="{{ old('cel') }}" required autofocus>
-
-                                    @error('cel')
-                                      <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                      </span>
-                                    @enderror
-                                  </div>
-                              </div>
-
-                                <div class="form-group row">
-                                  <label for="school" class="col-md-4 col-form-label text-md-right">Escuela*</label>
-
-                                  <div class="col-md-6">
-                                    <input id="school" type="text" class="form-control @error('school') is-invalid @enderror"
-                                      name="school" value="{{ old('school') }}" required autofocus>
-
-                                      @error('school')
-                                        <span class="invalid-feedback" role="alert">
-                                          <strong>{{ $message }}</strong>
-                                        </span>
-                                      @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                  <label for="grade" class="col-md-4 col-form-label text-md-right">Año*</label>
-
-                                  <div class="col-md-6">
-                                    <input id="grade" type="number" class="form-control @error('grade') is-invalid @enderror"
-                                      name="grade" value="{{ old('grade') }}" required autofocus>
-
-                                      @error('grade')
-                                        <span class="invalid-feedback" role="alert">
-                                          <strong>{{ $message }}</strong>
-                                        </span>
-                                      @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mb-0">
-                                  <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                      Modificar
-                                    </button>
-                                  </div>
-                                </div>
-                              @else
-                                <div class="alert alert-danger" role="alert">
-                                  Error! No se ha encontrado a esa persona o no tenés permisos suficientes para ver su información. Si crees
-                                  que
-                                  se trata de un error <a href="#">contactanos</a>.
-                                </div>
-                              @endif
-                            </div>
-                          </div>
-                          <br>
-                          <div class="text-center">
-                            <a href="{{ route('perfil') }}" class="btn btn-primary">
-                              Volver atrás
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  @endsection
+            @else
+              <div class="alert alert-danger" role="alert">
+                Error! No se ha encontrado a esa persona o no tenés permisos suficientes para ver su información. Si crees
+                que
+                se trata de un error <a href="#">contactanos</a>.
+              </div>
+            @endif
+          </div>
+        </div>
+        <br>
+        <div class="text-center">
+          <a href="{{ route('perfil') }}" class="btn btn-primary">
+            Volver atrás
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection

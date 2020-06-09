@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('school')->nullable();
             $table->integer('grade')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('creation_data')->nullable();
+            $table->boolean('is_admin')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
