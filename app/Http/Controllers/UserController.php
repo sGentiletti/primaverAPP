@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tribu;
@@ -103,7 +104,7 @@ class UserController extends Controller
         'email' => 'Ups! Parece que eso no es una dirección de e-mail...',
         'password.min' => 'Minimo 8 caracteres, dale que esto no lo hicimos complicado',
         'password.confirmed' => 'Te quedaron distintas las contraseñas intenta de nuevo, vos podes!'
-    ];
+        ];
         return $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'surname' => ['required', 'string', 'max:255'],
@@ -126,19 +127,26 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request) //Store guarda un indio en la DB. Funcion exclusiva para que el Cacique agregue indios.
     {
-        $validatedData = $this->validator($request);
-
         $user = User::create([
             'parent_id' => Auth::user()->id,
-            'name' => $validatedData['name'],
-            'surname' => $validatedData['surname'],
-            'dni' => $validatedData['dni'],
-            'gender' => $validatedData['gender'],
-            'email' => $validatedData['email'],
+            'name' => $request['name'],
+            'surname' => $request['surname'],
+            'dni' => $request['dni'],
+            'gender' => $request['gender'],
+            'birthdate' => $request['birthdate'],
+            'address' => $request['address'],
+            'city' => $request['city'],
+            'between_streets' => $request['between_streets'],
+            'phone' => $request['phone'],
+            'cel' => $request['cel'],
+            'school' => $request['school'],
+            'grade' => $request['grade'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['dni']),
         ]);
-
+        
         return redirect('perfil');
     }
 

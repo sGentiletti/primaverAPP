@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         @if(Auth::user()->parent_id != NULL)
-        Este usuario no es un Cacique, no debería estar aca 👊
+        <div class="alert alert-warning" role="alert">
+             No autorizado.<br>Todavía no está habilitada la entrada de Indios al sistema. Dejá que tu Cacique se ocupe de todo 😎.
+        </div>
         @else
         <div class="col-md-8 text-center">
             <div class="row">
