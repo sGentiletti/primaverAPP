@@ -8,7 +8,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class UserStoreRequest extends FormRequest
@@ -38,14 +37,14 @@ class UserStoreRequest extends FormRequest
         return [
         'name' => 'required|string|max:255|regex:/^([^0-9]*)$/',
         'surname' => 'required|string|max:255|regex:/^([^0-9]*)$/',
-        'dni' => 'required|max:8|regex:/^[0-9]*$/',
+        'dni' => 'required|digits:8|regex:/^[0-9]*$/',
         'gender' => 'required|string|max:1',
         'email' => 'required|email|max:255',
         'address' => 'required|string|max:255',
         'city' => 'required|string|max:255',
         'between_streets' => 'nullable|string|max:255',
-        'phone' => 'numeric',
-        'cel' => 'required|numeric',
+        'phone' => 'numeric|digits:8',
+        'cel' => 'required|numeric|digits:8',
         'school' => 'required|string|max:255',
         'grade' => 'required|numeric|regex:/^[0-9]*$/',
         //'birthdate' => 'required',
@@ -59,7 +58,7 @@ class UserStoreRequest extends FormRequest
             'string' => 'Solo se admiten caracteres válidos.',
             'email' => 'Mmh... No parece una dirección de correo válida.',
             'numeric' => '¡Sólo números!...',
-            'size' => 'Debe tener :size caracteres. ',
+            'digits' => 'Debe tener hasta 8 caracteres. ',
 
             'name.regex' => 'El nombre no puede contener números.',
             'surname.regex' => 'El apellido no puede contener números.',

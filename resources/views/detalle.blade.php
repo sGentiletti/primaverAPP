@@ -98,8 +98,7 @@
             @else
               <div class="alert alert-danger" role="alert">
                 Error! No se ha encontrado a esa persona o no tenés permisos suficientes para ver su información. Si crees
-                que
-                se trata de un error <a href="#">contactanos</a>.
+                que se trata de un error <a href="#">contactanos</a>.
               </div>
             @endif
           </div>

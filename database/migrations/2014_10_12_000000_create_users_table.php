@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->integer('grade')->nullable();
             $table->string('email')->unique();
             $table->boolean('is_admin')->default(0);
+            $table->boolean('verified')->default(0); //Para saber luego en las inscripciones si sus datos son correctos.
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -9,7 +9,6 @@ use App\Tribu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -92,36 +91,6 @@ class UserController extends Controller
         return view('agregar');
     }
 
-    protected function validator(Request $request, $indio = 0)
-    {
-        $id = $indio ? $indio->id : 0; //El ID es para validar con la Rule para que no tire error con "unique" en DNI y email.
-
-        $messages = [
-        'required' => ':attribute requerido',
-        'digits_between' => 'El :attribute no parece ser correcto.',
-        'unique' => 'El :attribute :input ya se encuentra registrado',
-        'dni.unique' => 'Ya hay registrado un indio con este DNI. Si el problema persiste, contactanos.',
-        'dni' => 'Solo se aceptan números.',
-        'email' => 'Ups! Parece que eso no es una dirección de e-mail...',
-        'password.min' => 'Minimo 8 caracteres, dale que esto no lo hicimos complicado',
-        'password.confirmed' => 'Te quedaron distintas las contraseñas intenta de nuevo, vos podes!'
-        ];
-        return $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'surname' => ['required', 'string', 'max:255'],
-        'dni' => ['required', 'digits_between:7,8', Rule::unique('users')->ignore($id)],
-        'gender' => ['required', 'string', 'max:1'],
-        'address' => ['required', 'string', 'max:255'],
-        'city' => ['required', 'string', 'max:255'],
-        'between_streets' => ['string', 'max:255'],
-        'phone' => ['numeric', 'max:255'],
-        'cel' => ['required', 'numeric', 'max:255'],
-        'school' => ['required', 'string', 'max:255'],
-        'grade' => ['required', 'numeric'],
-        'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-      ], $messages);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -147,7 +116,7 @@ class UserController extends Controller
             'grade' => $request['grade'],
             'email' => $request['email'],
             'password' => Hash::make($request['dni']),
-        ]); 
+        ]);
         
         return redirect('perfil');
     }
@@ -164,21 +133,32 @@ class UserController extends Controller
         }
     }
 
-    public function actualizarIndio(Request $request, $id)
+    public function actualizarIndio(UserStoreRequest $request, $id)
     {
-        $indio = User::find($id); //Instanciamos el modelo User a buscar en la variable $indio
-        $validatedData = $this->validator($request, $indio);
+        $persona = User::find($id); //Instanciamos el modelo User a buscar en la variable $indio
+        if ($persona->parent_id == Auth::user()->id) {
+      
+          $persona->name = $request['name'];
+          $persona->surname = $request['surname'];
+          $persona->dni = $request['dni'];
+          $persona->gender = $request['gender'];
+          $persona->birthdate = $request['birthdate'];
+          $persona->address = $request['address'];
+          $persona->city = $request['city'];
+          $persona->between_streets = $request['between_streets'];
+          $persona->phone = $request['phone'];
+          $persona->cel = $request['cel'];
+          $persona->school = $request['school'];
+          $persona->grade = $request['grade'];
+          $persona->email = $request['email'];
 
-        $indio->name = $validatedData['name']; //Cambiamos sus atributos
-        $indio->surname = $validatedData['surname'];
-        $indio->dni = $validatedData['dni'];
-        $indio->gender = $validatedData['gender'];
-        $indio->email = $validatedData['email'];
-        $indio->address = $validateData['address'];
-
-        $indio->save(); //Guarda los nuevos atributos en el modelo.
-        $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
-        return view('detalle', ['id' => $id], compact('indio', 'flag')); //Retornamos la vista con el mismo ID para seguir viendo a la misma persona, y compactamos los nuevos datos editados para poder visualizarlos.
+          $persona->save(); //Guarda los nuevos atributos en el modelo.
+          $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
+          return view('detalle', ['id' => $id], compact('persona', 'flag')); //Retornamos la vista con el mismo ID para seguir viendo a la misma persona, y compactamos los nuevos datos editados para poder visualizarlos.
+        }
+        else {
+          abort(403, 'No estás autorizado.');
+        }
     }
 
     public function eliminarIndio($id)
@@ -206,26 +186,32 @@ class UserController extends Controller
     // AAAAAAA                   AAAAAAADDDDDDDDDDDDD        MMMMMMMM               MMMMMMMM
 
 
-    public function registrarCacique(Request $request){
-      $cacique = User::create([
-        'parent_id' => NULL,
-        'name' => $request['name'],
-        'surname' => $request['surname'],
-        'gender' => $request['gender'],
-        'birthdate' => $request['birthdate'],
-        'address' => $request['address'],
-        'city' => $request['city'],
-        'between_streets' => $request['between_streets'],
-        'phone' => $request['phone'],
-        'cel' => $request['cel'],
-        'school' => $request['school'],
-        'grade' => $request['grade'],
-        'email' => $request['email'],
-        'dni' => $request['dni'],
-        'password' => Hash::make($request['dni'])
-      ]);
+    public function registrarCacique(UserStoreRequest $request){
+      if (Auth::user()->is_admin == 1) {
+        $cacique = User::create([
+          'parent_id' => NULL,
+          'name' => $request['name'],
+          'surname' => $request['surname'],
+          'gender' => $request['gender'],
+          'birthdate' => $request['birthdate'],
+          'address' => $request['address'],
+          'city' => $request['city'],
+          'between_streets' => $request['between_streets'],
+          'phone' => $request['phone'],
+          'cel' => $request['cel'],
+          'school' => $request['school'],
+          'grade' => $request['grade'],
+          'email' => $request['email'],
+          'dni' => $request['dni'],
+          'password' => Hash::make($request['dni'])
+        ]);
 
-      return redirect(route('adminPanel'));
+        return redirect(route('adminPanel'));
+      }
+      else {
+        abort(403, 'No estás autorizado.');
+      }
+
     }
 
     public function buscarPersonaPorDni(Request $request)
@@ -235,27 +221,33 @@ class UserController extends Controller
       return view('adm/detallePersona', compact('persona'));
     }
 
-    public function actualizarDni(Request $request){
-      $persona = User::where('dni', $request->dni)->first(); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
+    public function actualizarDni(userStoreRequest $request){
+      if (Auth::user()->is_admin == 1) {
+        $persona = User::where('dni', $request->dni)->first(); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
 
-      $persona->name = $request['name'];
-      $persona->surname = $request['surname'];
-      $persona->gender = $request['gender'];
-      $persona->birthdate = $request['birthdate'];
-      $persona->address = $request['address'];
-      $persona->city = $request['city'];
-      $persona->between_streets = $request['between_streets'];
-      $persona->phone = $request['phone'];
-      $persona->cel = $request['cel'];
-      $persona->school = $request['school'];
-      $persona->grade = $request['grade'];
-      $persona->email = $request['email'];
+        $persona->name = $request['name'];
+        $persona->surname = $request['surname'];
+        $persona->gender = $request['gender'];
+        $persona->birthdate = $request['birthdate'];
+        $persona->address = $request['address'];
+        $persona->city = $request['city'];
+        $persona->between_streets = $request['between_streets'];
+        $persona->phone = $request['phone'];
+        $persona->cel = $request['cel'];
+        $persona->school = $request['school'];
+        $persona->grade = $request['grade'];
+        $persona->email = $request['email'];
 
-      $persona->save();
+        $persona->save();
 
-      $persona = User::where('dni', $request->dni)->first(); //Despues de crearla la devolvemos a la vista.
-      $flag = 1; //Flag para mostrar la leyenda de actualizacion exitosa.
-      return view('adm/detallePersona', compact('persona', 'flag'));
+        $persona = User::where('dni', $request->dni)->first(); //Despues de crearla la devolvemos a la vista.
+        $flag = 1; //Flag para mostrar la leyenda de actualizacion exitosa.
+        return view('adm/detallePersona', compact('persona', 'flag'));
+      }
+      else {
+        abort(403, 'No estás autorizado.');
+      }
+      
     }
 
     public function mostrarListadoCaciques()
