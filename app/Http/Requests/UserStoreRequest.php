@@ -19,7 +19,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::user()->parent_id == NULL && Auth::user()->is_admin === 0) { //Solo si es Cacique puede agregar indios. Sino, 403!
+        if (Auth::user()->parent_id == NULL) { //Solo si es Cacique puede agregar indios. Sino, 403!
             return true;
         }
         else {
@@ -47,7 +47,7 @@ class UserStoreRequest extends FormRequest
         'cel' => 'required|numeric|digits:8',
         'school' => 'required|string|max:255',
         'grade' => 'required|numeric|regex:/^[0-9]*$/',
-        //'birthdate' => 'required',
+        //'birthdate' => 'required|date',
         ];
     }
 

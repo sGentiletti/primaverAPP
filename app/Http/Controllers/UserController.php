@@ -19,11 +19,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('perfil');
-    }
-
     public function rules()
     {
         return [
@@ -80,17 +75,6 @@ class UserController extends Controller
 
         return view('perfil', compact('indios', 'dataTribu'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showForm()
-    {
-        return view('agregar');
-    }
-
     /**
      * Store a newly created resource in storage.
      *

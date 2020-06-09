@@ -16,40 +16,61 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
-
-Route::get('/perfil', 'UserController@index')->name('perfil')->middleware("auth");
-//mostrar indios del cacique
-Route::get('/perfil', 'UserController@obtenerDatos')->name('perfil')->middleware("auth");
-
-Route::get('/perfil/agregar', 'UserController@showForm')->name('agregar')->middleware("auth");
-
-Route::post('/perfil', 'UserController@store')->name('agregarAction')->middleware("auth");
-//formulario para actualizar los datos del indio que se pasen por parametro
-Route::get('/perfil/detalle/{id}', 'UserController@detalleIndio')->name('detalleIndio')->middleware("auth");
-//accion de actualizar indio. No tiene vista, solo llama a la funcion.
-Route::post('/perfil/detalle/actualizar/{id}', 'UserController@actualizarIndio')->name('detalleAction')->middleware("auth");
-//Acción de eliminar un indio.
-Route::get('/perfil/detalle/eliminar/{id}', 'UserController@eliminarIndio')->name('eliminarIndioAction')->middleware("auth");
-//Accion de confirmar tribu como Cacique
-Route::get('/perfil/confirmar', 'TribuController@store')->name('confirmarAction')->middleware("auth");
-
-//ADMINISTRADOR
-//Vista del panel de Administracion
-Route::get('/adminpanel', 'UserController@mostrarListadoCaciques')->name('adminPanel')->middleware('auth', 'admin');
-//Ver info de la Tribu del Cacique seleccionado
-Route::get('adminpanel/tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
-//Buscar persona por dni
-Route::get('/adminpanel/persona/{dni}', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni')->middleware("auth");
-//Actualizar persona por DNI
-Route::post('/adminpanel/persona/updateAction', 'UserController@actualizarDni')->name('actualizarDni')->middleware("auth");
-
-//Registrar persona
-Route::post('/adminpanel/registrar/store', 'UserController@registrarCacique')->name('registrarCacique')->middleware("auth");
-Route::get('/adminpanel/registrar', function () {return view('adm/registrarCacique');})->name('registrarCaciqueForm')->middleware("auth");
-
-
-// Registration Routes...
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('registrar-cacique', 'Auth\RegisterController@register');
+
+//USER ROUTES
+Route::prefix('/perfil')->middleware('auth')->group(function () {
+    //perfil
+    Route::get('/', 'UserController@obtenerDatos')->name('perfil');
+
+    //Agregar Indio
+    Route::get('/agregar', function(){
+        return view('agregar');
+    })->name('agregar');
+    //Agregar indio (Action)
+    Route::post('/', 'UserController@store')->name('agregarAction');
+
+    //formulario para actualizar los datos del indio que se pasen por parametro
+    Route::get('detalle/{id}', 'UserController@detalleIndio')->name('detalleIndio');
+    //accion de actualizar indio. No tiene vista, solo llama a la funcion.
+    Route::post('detalle/{id}', 'UserController@actualizarIndio')->name('detalleAction');
+
+    //Acción de eliminar un indio.
+    Route::get('detalle/eliminar/{id}', 'UserController@eliminarIndio')->name('eliminarIndioAction');
+
+    //Accion de confirmar tribu como Cacique
+    Route::get('confirmar', 'TribuController@store')->name('confirmarAction');
+});
+
+
+//ADMIN ROUTES
+Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
+    //Vista del panel de Administracion
+    Route::get('/', 'UserController@mostrarListadoCaciques')->name('adminPanel');
+
+    //Ver info de la Tribu del Cacique seleccionado
+    Route::get('tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus');
+
+    //Buscar persona por dni
+    Route::get('persona/{dni}', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni');
+
+    //Actualizar persona por DNI
+    Route::post('persona/updateAction', 'UserController@actualizarDni')->name('actualizarDni');
+
+    //Registrar persona
+    Route::get('registrar', function () {
+        return view('adm/registrarCacique');
+    })->name('registrarCaciqueForm');
+    Route::post('registrar/store', 'UserController@registrarCacique')->name('registrarCacique');
+});
+
+
+
+
+
+
+
+
+
