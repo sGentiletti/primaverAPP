@@ -37,7 +37,7 @@ Route::get('/perfil/confirmar', 'TribuController@store')->name('confirmarAction'
 
 //ADMINISTRADOR
 //Vista del panel de Administracion
-Route::get('/adminpanel', 'UserController@mostrarListadoCaciques')->name('adminPanel')->middleware("auth");
+Route::get('/adminpanel', 'UserController@mostrarListadoCaciques')->name('adminPanel')->middleware('auth', 'admin');
 //Ver info de la Tribu del Cacique seleccionado
 Route::get('adminpanel/tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus')->middleware("auth");
 //Buscar persona por dni
