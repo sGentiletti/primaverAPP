@@ -238,7 +238,7 @@ class UserController extends Controller
     {
       /*Datos para Estadísticas*/
       $datos = [
-        "total" => User::where('parent_id', NULL)->where('is_admin', 0)->count(),
+        "total" => User::where('is_admin', 0)->count(),
         "totalCaciques" => User::where('parent_id', NULL)->where('is_admin', 0)->count(),
         "totalConfirmadas" => Tribu::all()->count()
       ];
