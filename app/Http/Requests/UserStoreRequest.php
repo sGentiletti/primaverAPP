@@ -1,6 +1,6 @@
 <?php
 /*
-    *Author: Emiliano Vargas
+    *Author: Emiliano Vargas (emivargas1998@gmail.com)
     *Date: 06/06/2020
     *Description: IndioStoreRequest se encarga de validar los request (formularios) en el controlador de Usuario. Se usa para verificar que quien carga los datos de los indios a la BD es un Cacique y no otro usuario (indio) y para verificar los input en busca de errores. 
 */
@@ -43,8 +43,8 @@ class UserStoreRequest extends FormRequest
         'address' => 'required|string|max:255',
         'city' => 'required|string|max:255',
         'between_streets' => 'nullable|string|max:255',
-        'phone' => 'numeric|digits:8',
-        'cel' => 'required|numeric|digits:8',
+        'phone' => 'numeric|digits_between:2,15',
+        'cel' => 'required|numeric|digits_between:2,15',
         'school' => 'required|string|max:255',
         'grade' => 'required|numeric|regex:/^[0-9]*$/',
         //'birthdate' => 'required|date',
