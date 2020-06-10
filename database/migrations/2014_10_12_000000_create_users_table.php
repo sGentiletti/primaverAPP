@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('between_streets')->nullable();
-            $table->integer('phone')->nullable();
-            $table->integer('cel')->nullable();
+            $table->unsignedInteger('phone')->nullable();
+            $table->unsignedInteger('cel')->nullable();
             $table->string('school')->nullable();
             $table->integer('grade')->nullable();
             $table->string('email')->unique();
