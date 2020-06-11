@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tribu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -18,11 +19,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('perfil');
-    }
-
     public function rules()
     {
         return [
@@ -79,89 +75,74 @@ class UserController extends Controller
 
         return view('perfil', compact('indios', 'dataTribu'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showForm()
-    {
-        return view('agregar');
-    }
-
-    protected function validator(Request $request, $indio = 0)
-    {
-        $id = $indio ? $indio->id : 0;
-
-        $messages = [
-        'required' => ':attribute requerido',
-        'digits_between' => 'El :attribute :input no tiene entre :min y :max números',
-        'unique' => 'El :attribute :input ya se encuentra registrado',
-        'dni.unique' => 'Ya hay registrado un indio con este DNI. Te damos otra oportunidad 😁',
-        'email' => 'Ups! Casi pero no... te salteaste la validacion de front, pero igual lo validamos en el back 😜',
-        'password.min' => 'Minimo 8 caracteres, dale que esto no lo hicimos complicado',
-        'password.confirmed' => 'Te quedaron distintas las contraseñas intenta de nuevo, vos podes!'
-    ];
-        return $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'surname' => ['required', 'string', 'max:255'],
-        'dni' => ['required', 'digits_between:7,8', Rule::unique('users')->ignore($id)],
-        'gender' => ['required', 'string', 'max:1'],
-        'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-      ], $messages);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request) //Store guarda un indio en la DB. Funcion exclusiva para que el Cacique agregue indios.
     {
-        $validatedData = $this->validator($request);
-        
+        //dd($request);
         $user = User::create([
             'parent_id' => Auth::user()->id,
-            'name' => $validatedData['name'],
-            'surname' => $validatedData['surname'],
-            'dni' => $validatedData['dni'],
-            'gender' => $validatedData['gender'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['dni'] . '_2020')
+            'name' => $request['name'],
+            'surname' => $request['surname'],
+            'dni' => $request['dni'],
+            'gender' => $request['gender'],
+            'birthdate' => Carbon::parse($request['birthday']),
+            'address' => $request['address'],
+            'city' => $request['city'],
+            'between_streets' => $request['between_streets'],
+            'phone' => $request['phone'],
+            'cel' => $request['cel'],
+            'school' => $request['school'],
+            'grade' => $request['grade'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['dni']),
         ]);
-
+        
         return redirect('perfil');
     }
 
     public function detalleIndio($id)
     {
-        $indio = User::find($id); //Buscamos en Usuarios el ID que pasamos en la ruta
+        $persona = User::find($id); //Buscamos en Usuarios el ID que pasamos en la ruta
 
-        if ($indio != null && Auth::user()->id == $indio->parent_id) { //Averiguamos si quien consulta es, efectivamente, el cacique de ese ID (persona)
-        return view('detalle', compact('indio')); //Si esa persona es su indio, le devolvemos los datos
+        if ($persona != null && Auth::user()->id == $persona->parent_id) { //Averiguamos si quien consulta es, efectivamente, el cacique de ese ID (persona)
+        return view('detalle', compact('persona')); //Si esa persona es su indio, le devolvemos los datos
         } else { //Sino, vaciamos la variable para que tire error.
-        $indio = null;
-            return view('detalle', compact('indio'));
+        $persona = null;
+            return view('detalle', compact('persona'));
         }
     }
 
-    public function actualizarIndio(Request $request, $id)
+    public function actualizarIndio(UserStoreRequest $request)
     {
-        $indio = User::find($id); //Instanciamos el modelo User a buscar en la variable $indio
+        $persona = User::find($request->id); //Instanciamos el modelo User a buscar en la variable $indio
+        if ($persona->parent_id == Auth::user()->id) {
+      
+          $persona->name = $request['name'];
+          $persona->surname = $request['surname'];
+          $persona->dni = $request['dni'];
+          $persona->gender = $request['gender'];
+          $persona->birthdate = $request['birthdate'];
+          $persona->address = $request['address'];
+          $persona->city = $request['city'];
+          $persona->between_streets = $request['between_streets'];
+          $persona->phone = $request['phone'];
+          $persona->cel = $request['cel'];
+          $persona->school = $request['school'];
+          $persona->grade = $request['grade'];
+          $persona->email = $request['email'];
 
-        $validatedData = $this->validator($request, $indio);
-
-        $indio->name = $validatedData['name']; //Cambiamos sus atributos
-        $indio->surname = $validatedData['surname'];
-        $indio->dni = $validatedData['dni'];
-        $indio->gender = $validatedData['gender'];
-        $indio->email = $validatedData['email'];
-
-        $indio->save(); //Guarda los nuevos atributos en el modelo.
-        $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
-        return view('detalle', ['id' => $id], compact('indio', 'flag')); //Retornamos la vista con el mismo ID para seguir viendo a la misma persona, y compactamos los nuevos datos editados para poder visualizarlos.
+          $persona->save(); //Guarda los nuevos atributos en el modelo.
+          $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
+          return view('detalle', ['id' => $request->id], compact('persona', 'flag')); //Retornamos la vista con el mismo ID para seguir viendo a la misma persona, y compactamos los nuevos datos editados para poder visualizarlos.
+        }
+        else {
+          abort(403, 'No estás autorizado.');
+        }
     }
 
     public function eliminarIndio($id)
@@ -170,21 +151,6 @@ class UserController extends Controller
 
         return redirect('perfil');
     }
-
-    public function mostrarListadoCaciques()
-    {
-        $caciques = User::where("parent_id", null)->get();
-
-        return view('ADMlistado', compact('caciques'));
-    }
-
-    public function mostrarListadoTribus($id)
-    {
-        $indios = User::find($id)->indios;
-        $cacique = User::find($id);
-        return view('ADMlistadoTribu', compact('indios', 'cacique'));
-    }
-
 
     // AAA               DDDDDDDDDDDDD        MMMMMMMM               MMMMMMMM
     // A:::A              D::::::::::::DDD     M:::::::M             M:::::::M
@@ -204,15 +170,92 @@ class UserController extends Controller
     // AAAAAAA                   AAAAAAADDDDDDDDDDDDD        MMMMMMMM               MMMMMMMM
 
 
-    public function adminPanel()
-    {
-        return view('ADMpanel');
+    public function registrarCacique(UserStoreRequest $request){
+      if (Auth::user()->is_admin == 1) {
+        $cacique = User::create([
+          'parent_id' => NULL,
+          'name' => $request['name'],
+          'surname' => $request['surname'],
+          'gender' => $request['gender'],
+          'birthdate' => $request['birthdate'],
+          'address' => $request['address'],
+          'city' => $request['city'],
+          'between_streets' => $request['between_streets'],
+          'phone' => $request['phone'],
+          'cel' => $request['cel'],
+          'school' => $request['school'],
+          'grade' => $request['grade'],
+          'email' => $request['email'],
+          'dni' => $request['dni'],
+          'password' => Hash::make($request['dni'])
+        ]);
+
+        return redirect(route('adminPanel'));
+      }
+      else {
+        abort(403, 'No estás autorizado.');
+      }
+
     }
 
     public function buscarPersonaPorDni(Request $request)
     {
-        $indio = User::where('dni', $request->dni)->get();
+      $persona = User::where('dni', $request->dni)->first(); //First hace que no haya que usar una foreach para recorrer la coleccion.
 
-        return view('ADMpanel', compact('indio'));
+      return view('adm/detallePersona', compact('persona'));
     }
+
+    public function actualizarDni(userStoreRequest $request){
+      if (Auth::user()->is_admin == 1) {
+        $persona = User::find($request->id); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
+
+        $persona->name = $request['name'];
+        $persona->surname = $request['surname'];
+        $persona->gender = $request['gender'];
+        $persona->birthdate = $request['birthdate'];
+        $persona->address = $request['address'];
+        $persona->city = $request['city'];
+        $persona->between_streets = $request['between_streets'];
+        $persona->phone = $request['phone'];
+        $persona->cel = $request['cel'];
+        $persona->school = $request['school'];
+        $persona->grade = $request['grade'];
+        $persona->email = $request['email'];
+        $persona->dni = $request['dni'];
+
+        $persona->save();
+
+        $persona = User::find($request->id); //Despues de crearla la devolvemos a la vista.
+        $flag = 1; //Flag para mostrar la leyenda de actualizacion exitosa.
+        return view('adm/detallePersona', compact('persona', 'flag'));
+      }
+      else {
+        abort(403, 'No estás autorizado.');
+      }
+      
+    }
+
+    public function mostrarListadoCaciques()
+    {
+      /*Datos para Estadísticas*/
+      $datos = [
+        "total" => User::where('is_admin', 0)->count(),
+        "totalCaciques" => User::where('parent_id', NULL)->where('is_admin', 0)->count(),
+        "totalConfirmadas" => Tribu::all()->count()
+      ];
+      /*Fin Datos Estadísticas*/
+
+      $data = User::where("parent_id", null)->where("is_admin", 0)->get(); //Traemos caciques y que no sean admin. (Para no mostrar al admin en el listado).
+      $caciques = $data->reverse(); //Revertimos la coleción para que muestre el cacique mas recientemente agregado en la primera posición.
+
+      return view('adm/panel', compact('caciques', 'datos'));
+    }
+
+    public function mostrarListadoTribus($id)
+    {
+      $indios = User::find($id)->indios;
+      $cacique = User::find($id);
+      return view('adm/listadoTribu', compact('indios', 'cacique'));
+    }
+
 }

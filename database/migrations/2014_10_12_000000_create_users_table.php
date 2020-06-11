@@ -18,18 +18,19 @@ class CreateUsersTable extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->string('surname');
-            $table->string('dni', 8)->unique();
+            $table->unsignedInteger('dni')->unique();
             $table->char('gender', 1);
             $table->date('birthdate')->nullable();
-            $table->text('address')->nullable();
-            $table->text('city')->nullable();
-            $table->text('between_streets')->nullable();
-            $table->integer('phone')->nullable();
-            $table->integer('cel')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('between_streets')->nullable();
+            $table->unsignedInteger('phone')->nullable();
+            $table->unsignedInteger('cel')->nullable();
             $table->string('school')->nullable();
             $table->integer('grade')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('creation_data')->nullable();
+            $table->boolean('is_admin')->default(0);
+            $table->boolean('verified')->default(0); //Para saber luego en las inscripciones si sus datos son correctos.
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

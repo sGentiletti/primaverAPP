@@ -15,6 +15,11 @@
                 <th scope="col">DNI</th>
               </tr>
             </thead>
+            @if ($indios->isEmpty() && $cacique->parent_id == NULL)
+              <div class="alert alert-primary" role="alert">
+                No se encontraron indios inscriptos por esta persona. ¿Quizás aún no comenzó a inscribir gente?
+              </div>
+            @endif
             <tbody>
               @php
                 $n = 1;
@@ -27,7 +32,7 @@
                   @endphp
                   <td>{{$indio->name}}</td>
                   <td>{{$indio->surname}}</td>
-                  <td>{{$indio->dni}}</td>
+                  <td><a href="/adminpanel/persona/{{$indio->dni}}">{{$indio->dni}}</a></td>
                 </tr>
               @endforeach
             </tbody>
@@ -38,7 +43,8 @@
             @endif
           </table>
         </div>
-            <a class="btn btn-primary" href="{{route('listadoCaciques')}}">Volver Atrás</a>
+        <br>
+        <a class="btn btn-primary" href="{{route('adminPanel')}}">Volver Atrás</a>
       </div>
     </div>
   </div>
