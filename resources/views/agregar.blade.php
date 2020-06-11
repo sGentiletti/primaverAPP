@@ -101,13 +101,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
+                            <label for="birthdate" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
 
                             <div class="col-md-6">
-                                <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror"
-                                    name="birthday" value="{{ old('birthday') }}" required autofocus>
+                                <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
+                                    name="birthdate" value="{{ old('birthday') }}" required autofocus>
 
-                                @error('birthday')
+                                @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

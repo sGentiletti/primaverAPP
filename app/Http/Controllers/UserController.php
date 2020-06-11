@@ -9,7 +9,7 @@ use App\Tribu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class UserController extends Controller
 {
@@ -90,7 +90,7 @@ class UserController extends Controller
             'surname' => $request['surname'],
             'dni' => $request['dni'],
             'gender' => $request['gender'],
-            'birthdate' => Carbon::parse($request['birthday']),
+            'birthdate' => $request['birthdate'],
             'address' => $request['address'],
             'city' => $request['city'],
             'between_streets' => $request['between_streets'],
@@ -101,6 +101,8 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['dni']),
         ]);
+
+        $user->sendEmailVerificationNotification(); //Cuando registramos un Usuario le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
         
         return redirect('perfil');
     }
@@ -189,6 +191,8 @@ class UserController extends Controller
           'dni' => $request['dni'],
           'password' => Hash::make($request['dni'])
         ]);
+
+        $cacique->sendEmailVerificationNotification(); //Cuando registramos un Cacique le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
 
         return redirect(route('adminPanel'));
       }

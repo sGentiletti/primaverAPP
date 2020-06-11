@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->boolean('verified')->default(0); //Para saber luego en las inscripciones si sus datos son correctos.
             $table->string('password');
             $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }

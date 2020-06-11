@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('registrar-cacique', 'Auth\RegisterController@register');
 
