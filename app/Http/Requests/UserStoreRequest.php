@@ -9,6 +9,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserStoreRequest extends FormRequest
 {
@@ -19,7 +20,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::user()->parent_id == NULL) { //Solo si es Cacique puede agregar indios. Sino, 403!
+        if ($this->user()->parent_id == NULL) { //Solo si es Cacique puede agregar indios. Sino, 403!
             return true;
         }
         else {
@@ -34,12 +35,12 @@ class UserStoreRequest extends FormRequest
      */
     public function rules()
     {
+        $user = $this->route('id');
+        //dd($user);
         return [
         'name' => 'required|string|max:255|regex:/^([^0-9]*)$/',
         'surname' => 'required|string|max:255|regex:/^([^0-9]*)$/',
-        'dni' => 'required|digits:8|regex:/^[0-9]*$/|unique:users',
         'gender' => 'required|string|max:1',
-        'email' => 'required|email|max:255|unique:users',
         'address' => 'required|string|max:255',
         'city' => 'required|string|max:255',
         'between_streets' => 'nullable|string|max:255',
@@ -47,6 +48,8 @@ class UserStoreRequest extends FormRequest
         'cel' => 'required|numeric|digits_between:2,15',
         'school' => 'required|string|max:255',
         'grade' => 'required|numeric|regex:/^[0-9]*$/',
+        'dni' => ['required', 'digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
+        'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
         //'birthdate' => 'required|date',
         ];
     }
@@ -59,6 +62,7 @@ class UserStoreRequest extends FormRequest
             'email' => 'Mmh... No parece una dirección de correo válida.',
             'numeric' => '¡Sólo números!...',
             'digits' => 'Debe tener hasta 8 caracteres. ',
+            'unique' => 'Ya existe',
 
             'name.regex' => 'El nombre no puede contener números.',
             'surname.regex' => 'El apellido no puede contener números.',

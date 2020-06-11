@@ -57,7 +57,7 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
     Route::get('persona/{dni}', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni');
 
     //Actualizar persona por DNI
-    Route::post('persona/updateAction', 'UserController@actualizarDni')->name('actualizarDni');
+    Route::post('persona/{id}', 'UserController@actualizarDni')->name('actualizarDni');
 
     //Registrar persona
     Route::get('registrar', function () {

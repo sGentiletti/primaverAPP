@@ -15,7 +15,7 @@
                 </div>
               @endif
               
-              <form class="" action="{{route('detalleAction', ['id' => $persona->id])}}" method="post">
+              <form class="" action="{{route('detalleAction', ['id' => App\User::find($persona->id)])}}" method="post">
                 @csrf
                 <div class="form-row">
               <div class="form-group col-md-6">

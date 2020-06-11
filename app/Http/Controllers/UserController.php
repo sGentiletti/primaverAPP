@@ -117,9 +117,9 @@ class UserController extends Controller
         }
     }
 
-    public function actualizarIndio(UserStoreRequest $request, $id)
+    public function actualizarIndio(UserStoreRequest $request)
     {
-        $persona = User::find($id); //Instanciamos el modelo User a buscar en la variable $indio
+        $persona = User::find($request->id); //Instanciamos el modelo User a buscar en la variable $indio
         if ($persona->parent_id == Auth::user()->id) {
       
           $persona->name = $request['name'];
@@ -138,7 +138,7 @@ class UserController extends Controller
 
           $persona->save(); //Guarda los nuevos atributos en el modelo.
           $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
-          return view('detalle', ['id' => $id], compact('persona', 'flag')); //Retornamos la vista con el mismo ID para seguir viendo a la misma persona, y compactamos los nuevos datos editados para poder visualizarlos.
+          return view('detalle', ['id' => $request->id], compact('persona', 'flag')); //Retornamos la vista con el mismo ID para seguir viendo a la misma persona, y compactamos los nuevos datos editados para poder visualizarlos.
         }
         else {
           abort(403, 'No estás autorizado.');
@@ -207,7 +207,7 @@ class UserController extends Controller
 
     public function actualizarDni(userStoreRequest $request){
       if (Auth::user()->is_admin == 1) {
-        $persona = User::where('dni', $request->dni)->first(); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
+        $persona = User::find($request->id); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
 
         $persona->name = $request['name'];
         $persona->surname = $request['surname'];
@@ -221,10 +221,11 @@ class UserController extends Controller
         $persona->school = $request['school'];
         $persona->grade = $request['grade'];
         $persona->email = $request['email'];
+        $persona->dni = $request['dni'];
 
         $persona->save();
 
-        $persona = User::where('dni', $request->dni)->first(); //Despues de crearla la devolvemos a la vista.
+        $persona = User::find($request->id); //Despues de crearla la devolvemos a la vista.
         $flag = 1; //Flag para mostrar la leyenda de actualizacion exitosa.
         return view('adm/detallePersona', compact('persona', 'flag'));
       }

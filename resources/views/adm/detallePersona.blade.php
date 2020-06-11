@@ -6,7 +6,7 @@
         <div class="card">
           @if ($persona != NULL)
           <div class="card-header"><b>Procure revisar bien los datos antes de enviar el formulario.</b></div><br>
-          <form class="" action="{{route('actualizarDni')}}" method="post">
+          <form class="" action="{{route('actualizarDni', ['id' => App\User::find($persona->id)])}}" method="post">
             @csrf
             @if ($flag ?? '')
               <div class="alert alert-success" role="alert">
