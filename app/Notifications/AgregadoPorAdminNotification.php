@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
@@ -9,8 +11,12 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\URL;
 
-class AgregadoPorAdminNotification extends Notification
+class AgregadoPorAdminNotification extends Notification implements ShouldQueue
 {
+    use Queueable;
+
+    public $name; //Publico para que la vista (la notificación) pueda acceder a este recurso. Lo necesita al ser Queueable.
+
     public function __construct($name)
     {
         $this->name = $name; //El nombre recibido por parametro. Lo seteamos como $this->name para usarlo en el mail. https://stackoverflow.com/questions/40703804/laravel-5-3-how-to-show-username-in-notifications-email
