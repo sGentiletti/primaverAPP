@@ -21,7 +21,7 @@ Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')-
 Route::post('registrar-cacique', 'Auth\RegisterController@register');
 
 //USER ROUTES
-Route::prefix('/perfil')->middleware('auth')->group(function () {
+Route::prefix('/perfil')->middleware('auth', 'verified')->group(function () {
     //perfil
     Route::get('/', 'UserController@obtenerDatos')->name('perfil');
 

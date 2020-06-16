@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\URL;
 
-class AgregadoPorCaciqueNotification extends Notification
+class AgregadoPorAdminNotification extends Notification
 {
     public function __construct($name)
     {
@@ -49,9 +49,10 @@ class AgregadoPorCaciqueNotification extends Notification
         }
 
         return (new MailMessage)
-            ->subject('Has sido registrado en una Tribu. Verifica tu correo')
-            ->greeting('Hola, ' . $this->name)
-            ->line('Bienvenid@ a la plataforma virtual de la SEJU. Te han agregado a una tribu, ¡Que emoción! Para confirmar tu registro en la tribu, debés verificar tu cuenta haciendo click en el botón. De lo contrario no contarás como participante válido para la inscripción de la tribu.')
+            ->subject($this->name . ', estás a un paso de armar tu tribu.')
+            ->greeting('Bienvenid@ a la plataforma virtual de la SEJU.')
+            ->line('Hola ' . $this->name . '.')
+            ->line('Tus datos han sido verificados y ya podés agregar personas a tu tribu, sólo falta que confirmés tu cuenta haciendo click en el siguiente botón.')
             ->line('Usá tu mail y DNI como contraseña para poder ingresar.')
             ->action('Verificar Correo', $verificationUrl)
             ->line('Si creés que se trata de un error, contactanos.');

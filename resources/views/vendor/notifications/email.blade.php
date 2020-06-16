@@ -57,6 +57,8 @@ Equipo de SeJu Digital.
         'actionText' => $actionText,
     ]
 ) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+<br>
+<span>Este mensaje ha sido enviado desde una dirección de correo que no admite respuestas, si necesitás contactarte con nosotros, por favor hazlo a través de otro canal.</span>
 @endslot
 @endisset
 @endcomponent
