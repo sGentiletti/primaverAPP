@@ -102,7 +102,7 @@ class UserController extends Controller
             'password' => Hash::make($request['dni']),
         ]);
 
-        $user->sendEmailVerificationNotification(); //Cuando registramos un Usuario le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
+        $user->sendEmailVerificationNotificationToIndio(); //Cuando registramos un Usuario le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
         
         return redirect('perfil');
     }
