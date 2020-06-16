@@ -13,7 +13,7 @@ class AgregadoPorCaciqueNotification extends Notification
 {
     public function __construct($name)
     {
-        $this->name = $name; //El nombre recibido por parametro. Lo seteamos como $this->name para usarlo en el mail.
+        $this->name = $name; //El nombre recibido por parametro. Lo seteamos como $this->name para usarlo en el mail. https://stackoverflow.com/questions/40703804/laravel-5-3-how-to-show-username-in-notifications-email
     }
 
     /**
