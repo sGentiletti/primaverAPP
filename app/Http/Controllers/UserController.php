@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Notifications\UsuarioEliminado;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tribu;
@@ -149,7 +150,15 @@ class UserController extends Controller
 
     public function eliminarIndio($id)
     {
-        $indio = User::find($id)->delete();
+      $persona = User::find($id);
+
+        if ($persona->parent_id == Auth::user()->id) {
+          $persona->notify(new UsuarioEliminado);
+          $persona->delete();
+        }
+        else{
+          abort(403, 'No estás autorizado.');
+        }
 
         return redirect('perfil');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -15,11 +16,11 @@ class AgregadoPorCaciqueNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $name; //Publico para que la vista (la notificación) pueda acceder a este recurso. Lo necesita al ser Queueable.
+    public $user; //Publico para que la vista (la notificación) pueda acceder a este recurso. Lo necesita al ser Queueable.
 
-    public function __construct($name)
+    public function __construct($id)
     {
-        $this->name = $name; //El nombre recibido por parametro. Lo seteamos como $this->name para usarlo en el mail. https://stackoverflow.com/questions/40703804/laravel-5-3-how-to-show-username-in-notifications-email
+        $this->user = User::find($id); //El nombre recibido por parametro. Lo seteamos como $this->name para usarlo en el mail. https://stackoverflow.com/questions/40703804/laravel-5-3-how-to-show-username-in-notifications-email
     }
 
     /**
@@ -53,12 +54,12 @@ class AgregadoPorCaciqueNotification extends Notification implements ShouldQueue
         if (static::$toMailCallback) {
             return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
         }
-
+        
         return (new MailMessage)
             ->subject('Has sido registrado en una Tribu. Verifica tu correo')
-            ->greeting('Hola, ' . $this->name)
+            ->greeting('Hola, ' . $this->user->name . " " . $this->user->surname)
             ->line('Bienvenid@ a la plataforma virtual de la SEJU. Te han agregado a una tribu, ¡Que emoción! Para confirmar tu registro en la tribu, debés verificar tu cuenta haciendo click en el botón. De lo contrario no contarás como participante válido para la inscripción de la tribu.')
-            ->line('Usá tu mail y DNI como contraseña para poder ingresar.')
+            ->line('Es importante que ingreses a la plataforma para que verifiques tus datos con tus propios ojos e informarle a tu cacique en caso de que haya algun error. Usá tu mail y DNI como contraseña para poder ingresar.')
             ->action('Verificar Correo', $verificationUrl)
             ->line('Si creés que se trata de un error, contactanos.');
     }

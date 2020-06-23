@@ -48,8 +48,8 @@ Equipo de SeJu Digital.
 @endif
 
 {{-- Subcopy --}}
-@isset($actionText)
 @slot('subcopy')
+@isset($actionText)
 @lang(
     "Si tenés problemas al hacer click en \":actionText\" copia y pega el siguiente link\n".
     'en tu navegador web',
@@ -57,8 +57,8 @@ Equipo de SeJu Digital.
         'actionText' => $actionText,
     ]
 ) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+@endisset
 <br>
 <span>Este mensaje ha sido enviado desde una dirección de correo que no admite respuestas, si necesitás contactarte con nosotros, por favor hazlo a través de otro canal.</span>
 @endslot
-@endisset
 @endcomponent
