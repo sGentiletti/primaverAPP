@@ -36,10 +36,10 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         $user = $this->route('id');
-        //dd($user);
+
         return [
-        'name' => 'required|string|max:255|regex:/^([^0-9]*)$/',
-        'surname' => 'required|string|max:255|regex:/^([^0-9]*)$/',
+        'name' => 'required|string|max:255|regex:/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/',
+        'surname' => 'required|string|max:255|regex:/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/',
         'gender' => 'required|string|max:1',
         'address' => 'required|string|max:255',
         'city' => 'required|string|max:255',
@@ -50,7 +50,7 @@ class UserStoreRequest extends FormRequest
         'grade' => 'required|numeric|regex:/^[0-9]*$/',
         'dni' => ['required', 'digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
         'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
-        //'birthdate' => 'required|date',
+        'birthdate' => 'required|date|date_format:Y-m-d',
         ];
     }
 
@@ -63,15 +63,18 @@ class UserStoreRequest extends FormRequest
             'numeric' => '¡Sólo números!...',
             'digits' => 'Debe tener hasta 8 caracteres. ',
             'unique' => 'Ya existe',
+            'date' => 'Fecha inválida.',
 
-            'name.regex' => 'El nombre no puede contener números.',
-            'surname.regex' => 'El apellido no puede contener números.',
+            'name.regex' => 'El nombre no puede contener números ni signos.',
+            'surname.regex' => 'El apellido no puede contener números ni signos.',
             'dni.regex' => 'El DNI no puede contener letras ni símbolos.',
             'dni.max' => 'El DNI no puede contener mas de :max números.',
             'grade.regex' => 'No ingreses la división del curso. Solo el año al que asiste.',
             'gender.required' => 'Seleccioná un sexo.',
-            'dni.unique' => 'No podemos continuar porque ya hay alguien registrado con este DNI.',
-            'email.unique' => 'Vaya! Ya hay alguien registrado con este email',
+            'dni.unique' => 'No podemos continuar porque ya hay alguien registrado con ese DNI.',
+            'email.unique' => 'Vaya! Ya hay alguien registrado con ese email.',
+            'birthdate.date' => 'Fecha incorrecta.',
+            'birthdate.date_format' => 'Formato incorrecto de fecha.'
         ];
     }
 }

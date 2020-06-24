@@ -43,21 +43,23 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a>
                             </li>
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">Registrarse</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
+                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/adminpanel">
-                                        Panel de Administración
-                                    </a>
+                                    @if (Auth::user()->is_admin == 1)
+                                        <a class="dropdown-item" href="/adminpanel">
+                                            Panel de Administración
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="/perfil">
                                         Perfil
                                     </a>
