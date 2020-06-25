@@ -86,8 +86,8 @@ class UserController extends Controller
         //dd($request);
         $user = User::create([
             'parent_id' => Auth::user()->id,
-            'name' => $request['name'],
-            'surname' => $request['surname'],
+            'name' => ucfirst($request['name']),
+            'surname' => ucfirst($request['surname']),
             'dni' => $request['dni'],
             'gender' => $request['gender'],
             'birthdate' => Carbon::parse($request['birthday']),
