@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Notifications\UsuarioEliminado;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tribu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class UserController extends Controller
 {
@@ -90,7 +91,7 @@ class UserController extends Controller
             'surname' => ucfirst($request['surname']),
             'dni' => $request['dni'],
             'gender' => $request['gender'],
-            'birthdate' => Carbon::parse($request['birthday']),
+            'birthdate' => $request['birthdate'],
             'address' => $request['address'],
             'city' => $request['city'],
             'between_streets' => $request['between_streets'],
@@ -101,6 +102,8 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['dni']),
         ]);
+
+        $user->sendEmailVerificationNotificationToIndio(); //Cuando registramos un Usuario le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
         
         return redirect('perfil');
     }
@@ -147,7 +150,15 @@ class UserController extends Controller
 
     public function eliminarIndio($id)
     {
-        $indio = User::find($id)->delete();
+      $persona = User::find($id);
+
+        if ($persona->parent_id == Auth::user()->id) {
+          $persona->notify(new UsuarioEliminado);
+          $persona->delete();
+        }
+        else{
+          abort(403, 'No estás autorizado.');
+        }
 
         return redirect('perfil');
     }
@@ -189,6 +200,8 @@ class UserController extends Controller
           'dni' => $request['dni'],
           'password' => Hash::make($request['dni'])
         ]);
+
+        $cacique->sendEmailVerificationNotificationToCacique(); //Cuando registramos un Cacique le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
 
         return redirect(route('adminPanel'));
       }

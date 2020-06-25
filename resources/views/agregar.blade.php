@@ -45,7 +45,7 @@
                             <label for="dni" class="col-md-4 col-form-label text-md-right">DNI*</label>
 
                             <div class="col-md-6">
-                                <input id="dni" type="tel" class="form-control @error('dni') is-invalid @enderror"
+                                <input id="dni" type="number" class="form-control @error('dni') is-invalid @enderror"
                                     name="dni" value="{{ old('dni') }}" required autofocus>
 
                                 @error('dni')
@@ -101,13 +101,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
+                            <label for="birthdate" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
 
                             <div class="col-md-6">
-                                <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror"
-                                    name="birthday" value="{{ old('birthday') }}" required autofocus>
+                                <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
+                                    name="birthdate" value="{{ old('birthday') }}" required autofocus>
 
-                                @error('birthday')
+                                @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -164,7 +164,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">Telefono de Línea</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror"
+                                <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror"
                                     name="phone" value="{{ old('phone') }}" autofocus>
 
                                 @error('phone')
@@ -179,7 +179,7 @@
                             <label for="cel" class="col-md-4 col-form-label text-md-right">Celular*</label>
 
                             <div class="col-md-6">
-                                <input id="cel" type="number" class="form-control @error('cel') is-invalid @enderror"
+                                <input id="cel" type="tel" class="form-control @error('cel') is-invalid @enderror"
                                     name="cel" value="{{ old('cel') }}" required autofocus>
 
                                 @error('cel')

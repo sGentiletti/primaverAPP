@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\TribuConfirmadaNotification;
 use Illuminate\Http\Request;
+use App\User;
 use App\Tribu;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class TribuController extends Controller
 {
@@ -34,10 +37,10 @@ class TribuController extends Controller
             return 'SE01';
         }
 
-        $previouLastConfirmed = $lastConfirmed->num_tribu;
+        $previousLastConfirmed = $lastConfirmed->num_tribu;
         
-        $preFix = substr($previouLastConfirmed, 0, 2);
-        $num = substr($previouLastConfirmed, 2);
+        $preFix = substr($previousLastConfirmed, 0, 2);
+        $num = substr($previousLastConfirmed, 2);
 
         if ($preFix === 'SE') {
             return 'JU' . $num;
@@ -57,10 +60,18 @@ class TribuController extends Controller
     {
         $lastConfirmed = Tribu::orderByDesc('id')->first();
 
-        $user = Tribu::create([
+        $tribu = Tribu::create([
             'user_id' => Auth::user()->id,
             'num_tribu' =>  $this->calculateNumTribu($lastConfirmed),
         ]);
+        //Notificamos a todos los usuarios.
+        //Primero al cacique
+        $user = User::find($tribu->user_id);
+        $user->notify(new TribuConfirmadaNotification());
+        //Despues buscamos a sus indios y los notificamos tambien.
+        $indios = $user->indios;
+        Notification::send($indios, new TribuConfirmadaNotification());
+ 
 
         return redirect('perfil');
     }
