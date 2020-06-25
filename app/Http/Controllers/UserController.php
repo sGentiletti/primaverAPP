@@ -87,14 +87,14 @@ class UserController extends Controller
         //dd($request);
         $user = User::create([
             'parent_id' => Auth::user()->id,
-            'name' => ucfirst($request['name']),
-            'surname' => ucfirst($request['surname']),
+            'name' => ucwords($request['name']),
+            'surname' => ucwords($request['surname']),
             'dni' => $request['dni'],
             'gender' => $request['gender'],
             'birthdate' => $request['birthdate'],
-            'address' => $request['address'],
-            'city' => $request['city'],
-            'between_streets' => $request['between_streets'],
+            'address' => ucwords($request['address']),
+            'city' => ucwords($request['city']),
+            'between_streets' => ucwords($request['between_streets']),
             'phone' => $request['phone'],
             'cel' => $request['cel'],
             'school' => $request['school'],
@@ -125,13 +125,13 @@ class UserController extends Controller
         $persona = User::find($request->id); //Instanciamos el modelo User a buscar en la variable $indio
         if ($persona->parent_id == Auth::user()->id) {
       
-          $persona->name = $request['name'];
-          $persona->surname = $request['surname'];
+          $persona->name = ucwords($request['name']);
+          $persona->surname = ucwords($request['surname']);
           $persona->dni = $request['dni'];
           $persona->gender = $request['gender'];
           $persona->birthdate = $request['birthdate'];
           $persona->address = $request['address'];
-          $persona->city = $request['city'];
+          $persona->city = ucwords($request['city']);
           $persona->between_streets = $request['between_streets'];
           $persona->phone = $request['phone'];
           $persona->cel = $request['cel'];
@@ -185,12 +185,12 @@ class UserController extends Controller
       if (Auth::user()->is_admin == 1) {
         $cacique = User::create([
           'parent_id' => NULL,
-          'name' => $request['name'],
-          'surname' => $request['surname'],
+          'name' => ucwords($request['name']),
+          'surname' => ucwords($request['surname']),
           'gender' => $request['gender'],
           'birthdate' => $request['birthdate'],
           'address' => $request['address'],
-          'city' => $request['city'],
+          'city' => ucwords($request['city']),
           'between_streets' => $request['between_streets'],
           'phone' => $request['phone'],
           'cel' => $request['cel'],
@@ -222,12 +222,12 @@ class UserController extends Controller
       if (Auth::user()->is_admin == 1) {
         $persona = User::find($request->id); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
 
-        $persona->name = $request['name'];
-        $persona->surname = $request['surname'];
+        $persona->name = ucwords($request['name']);
+        $persona->surname = ucwords($request['surname']);
         $persona->gender = $request['gender'];
         $persona->birthdate = $request['birthdate'];
         $persona->address = $request['address'];
-        $persona->city = $request['city'];
+        $persona->city = ucwords($request['city']);
         $persona->between_streets = $request['between_streets'];
         $persona->phone = $request['phone'];
         $persona->cel = $request['cel'];
