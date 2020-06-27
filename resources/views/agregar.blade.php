@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mail') }}*</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Email*</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -101,11 +101,26 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Repetir email*</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email_confirmation" value="{{ old('email_confirmation') }}" required >
+
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="birthdate" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
 
                             <div class="col-md-6">
                                 <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                                    name="birthdate" value="{{ old('birthday') }}" required autofocus>
+                                    name="birthdate" value="{{ old('birthdate') }}" required autofocus>
 
                                 @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
@@ -164,7 +179,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">Telefono de Línea</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror"
+                                <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror"
                                     name="phone" value="{{ old('phone') }}" autofocus>
 
                                 @error('phone')
@@ -179,7 +194,7 @@
                             <label for="cel" class="col-md-4 col-form-label text-md-right">Celular*</label>
 
                             <div class="col-md-6">
-                                <input id="cel" type="tel" class="form-control @error('cel') is-invalid @enderror"
+                                <input id="cel" type="number" class="form-control @error('cel') is-invalid @enderror"
                                     name="cel" value="{{ old('cel') }}" required autofocus>
 
                                 @error('cel')

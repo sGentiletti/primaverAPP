@@ -66,8 +66,9 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
     Route::post('registrar/store', 'UserController@registrarCacique')->name('registrarCacique');
 });
 
-
-
+//Miscellaneous routes
+Route::get('/contacto', 'ContactoController@index')->name('contacto')->middleware("auth");
+Route::post('/contacto', 'ContactoController@sendEmail')->middleware("auth");
 
 
 

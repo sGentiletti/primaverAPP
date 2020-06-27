@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Notifications\UsuarioEliminado;
 use Illuminate\Http\Request;
 use App\User;
@@ -120,14 +121,13 @@ class UserController extends Controller
         }
     }
 
-    public function actualizarIndio(UserStoreRequest $request)
+    public function actualizarIndio(UserUpdateRequest $request)
     {
         $persona = User::find($request->id); //Instanciamos el modelo User a buscar en la variable $indio
         if ($persona->parent_id == Auth::user()->id) {
       
           $persona->name = ucwords($request['name']);
           $persona->surname = ucwords($request['surname']);
-          $persona->dni = $request['dni'];
           $persona->gender = $request['gender'];
           $persona->birthdate = $request['birthdate'];
           $persona->address = $request['address'];
@@ -137,7 +137,6 @@ class UserController extends Controller
           $persona->cel = $request['cel'];
           $persona->school = $request['school'];
           $persona->grade = $request['grade'];
-          $persona->email = $request['email'];
 
           $persona->save(); //Guarda los nuevos atributos en el modelo.
           $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
