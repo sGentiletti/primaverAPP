@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('registrar-cacique', 'Auth\RegisterController@register');
 
 //USER ROUTES
-Route::prefix('/perfil')->middleware('auth')->group(function () {
+Route::prefix('/perfil')->middleware('auth', 'verified')->group(function () {
     //perfil
     Route::get('/', 'UserController@obtenerDatos')->name('perfil');
 
@@ -66,8 +66,9 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
     Route::post('registrar/store', 'UserController@registrarCacique')->name('registrarCacique');
 });
 
-
-
+//Miscellaneous routes
+Route::get('/contacto', 'ContactoController@index')->name('contacto')->middleware("auth");
+Route::post('/contacto', 'ContactoController@sendEmail')->middleware("auth");
 
 
 

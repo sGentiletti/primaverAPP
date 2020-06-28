@@ -45,7 +45,7 @@
                             <label for="dni" class="col-md-4 col-form-label text-md-right">DNI*</label>
 
                             <div class="col-md-6">
-                                <input id="dni" type="tel" class="form-control @error('dni') is-invalid @enderror"
+                                <input id="dni" type="number" class="form-control @error('dni') is-invalid @enderror"
                                     name="dni" value="{{ old('dni') }}" required autofocus>
 
                                 @error('dni')
@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mail') }}*</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Email*</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -101,13 +101,28 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Repetir email*</label>
 
                             <div class="col-md-6">
-                                <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror"
-                                    name="birthday" value="{{ old('birthday') }}" required autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email_confirmation" value="{{ old('email_confirmation') }}" required >
 
-                                @error('birthday')
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="birthdate" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento*</label>
+
+                            <div class="col-md-6">
+                                <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
+                                    name="birthdate" value="{{ old('birthdate') }}" required autofocus>
+
+                                @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

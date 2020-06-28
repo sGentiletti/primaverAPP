@@ -11,7 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class UserStoreRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class UserStoreRequest extends FormRequest
     {
         if ($this->user()->parent_id == NULL) { //Solo si es Cacique puede agregar indios. Sino, 403!
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -38,19 +37,19 @@ class UserStoreRequest extends FormRequest
         $user = $this->route('id');
 
         return [
-        'name' => 'required|string|max:255|regex:/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/',
-        'surname' => 'required|string|max:255|regex:/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/',
-        'gender' => 'required|string|max:1',
-        'address' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'between_streets' => 'nullable|string|max:255',
-        'phone' => 'nullable|numeric|digits_between:8,15',
-        'cel' => 'required|numeric|digits_between:8,15',
-        'school' => 'required|string|max:255',
-        'grade' => 'required|numeric|between:2,7|regex:/^[0-9]*$/',
-        'dni' => ['required', 'digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
-        'email' => ['confirmed', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
-        'birthdate' => 'required|date|date_format:Y-m-d',
+            'name' => 'required|string|max:255|regex:/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/',
+            'surname' => 'required|string|max:255|regex:/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/',
+            'gender' => 'required|string|max:1',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'between_streets' => 'nullable|string|max:255',
+            'phone' => 'nullable|numeric|digits_between:8,15',
+            'cel' => 'required|numeric|digits_between:8,15',
+            'school' => 'required|string|max:255',
+            'grade' => 'required|numeric|between:2,7|regex:/^[0-9]*$/',
+            'dni' => ['digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
+            'email' => ['email', 'max:255', Rule::unique('users')->ignore($user)],
+            'birthdate' => 'required|date|date_format:Y-m-d',
         ];
     }
 

@@ -43,7 +43,10 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>DNI</label>
-                <input required name="dni" type="number" class="form-control @error('dni') is-invalid @enderror" placeholder="12345678" value={{$persona->dni}}>
+                <input disabled name="dni" type="number" class="form-control @error('dni') is-invalid @enderror" placeholder="12345678" value={{$persona->dni}}>
+                <small class="form-text text-muted">
+                  Si necesitas modificar este campo tenés que contactarnos.
+                </small>
 
                 @error('dni')
                   <span class="invalid-feedback" role="alert">
@@ -79,7 +82,10 @@
               </div>
               <div class="form-group col-md-6">
                 <label>Dirección de Correo Electrónico</label>
-                <input required name="email" value="{{$persona->email}}" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="johnappleseed@sejuturdera.com.ar">
+                <input disabled name="email" value="{{$persona->email}}" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="johnappleseed@sejuturdera.com.ar">
+                <small class="form-text text-muted">
+                  Si necesitas modificar este campo tenés que contactarnos.
+                </small>
 
                 @error('email')
                   <span class="invalid-feedback" role="alert">

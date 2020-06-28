@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Notifications\UsuarioEliminado;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tribu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class UserController extends Controller
 {
@@ -86,14 +88,14 @@ class UserController extends Controller
         //dd($request);
         $user = User::create([
             'parent_id' => Auth::user()->id,
-            'name' => $request['name'],
-            'surname' => $request['surname'],
+            'name' => ucwords($request['name']),
+            'surname' => ucwords($request['surname']),
             'dni' => $request['dni'],
             'gender' => $request['gender'],
-            'birthdate' => Carbon::parse($request['birthday']),
-            'address' => $request['address'],
-            'city' => $request['city'],
-            'between_streets' => $request['between_streets'],
+            'birthdate' => $request['birthdate'],
+            'address' => ucwords($request['address']),
+            'city' => ucwords($request['city']),
+            'between_streets' => ucwords($request['between_streets']),
             'phone' => $request['phone'],
             'cel' => $request['cel'],
             'school' => $request['school'],
@@ -101,6 +103,8 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['dni']),
         ]);
+
+        $user->sendEmailVerificationNotificationToIndio(); //Cuando registramos un Usuario le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
         
         return redirect('perfil');
     }
@@ -117,24 +121,22 @@ class UserController extends Controller
         }
     }
 
-    public function actualizarIndio(UserStoreRequest $request)
+    public function actualizarIndio(UserUpdateRequest $request)
     {
         $persona = User::find($request->id); //Instanciamos el modelo User a buscar en la variable $indio
         if ($persona->parent_id == Auth::user()->id) {
       
-          $persona->name = $request['name'];
-          $persona->surname = $request['surname'];
-          $persona->dni = $request['dni'];
+          $persona->name = ucwords($request['name']);
+          $persona->surname = ucwords($request['surname']);
           $persona->gender = $request['gender'];
           $persona->birthdate = $request['birthdate'];
           $persona->address = $request['address'];
-          $persona->city = $request['city'];
+          $persona->city = ucwords($request['city']);
           $persona->between_streets = $request['between_streets'];
           $persona->phone = $request['phone'];
           $persona->cel = $request['cel'];
           $persona->school = $request['school'];
           $persona->grade = $request['grade'];
-          $persona->email = $request['email'];
 
           $persona->save(); //Guarda los nuevos atributos en el modelo.
           $flag = 1; //Flag para mostrar un aviso de que los datos fueron modificados con éxito desde la vista.
@@ -147,7 +149,15 @@ class UserController extends Controller
 
     public function eliminarIndio($id)
     {
-        $indio = User::find($id)->delete();
+      $persona = User::find($id);
+
+        if ($persona->parent_id == Auth::user()->id) {
+          $persona->notify(new UsuarioEliminado);
+          $persona->delete();
+        }
+        else{
+          abort(403, 'No estás autorizado.');
+        }
 
         return redirect('perfil');
     }
@@ -174,12 +184,12 @@ class UserController extends Controller
       if (Auth::user()->is_admin == 1) {
         $cacique = User::create([
           'parent_id' => NULL,
-          'name' => $request['name'],
-          'surname' => $request['surname'],
+          'name' => ucwords($request['name']),
+          'surname' => ucwords($request['surname']),
           'gender' => $request['gender'],
           'birthdate' => $request['birthdate'],
           'address' => $request['address'],
-          'city' => $request['city'],
+          'city' => ucwords($request['city']),
           'between_streets' => $request['between_streets'],
           'phone' => $request['phone'],
           'cel' => $request['cel'],
@@ -189,6 +199,8 @@ class UserController extends Controller
           'dni' => $request['dni'],
           'password' => Hash::make($request['dni'])
         ]);
+
+        $cacique->sendEmailVerificationNotificationToCacique(); //Cuando registramos un Cacique le mandamos un mail para que confirme su correo. Es importante ya que con el Middleware "verified" no van a poder acceder a la plataforma a no ser que hayan verificado su correo.
 
         return redirect(route('adminPanel'));
       }
@@ -209,12 +221,12 @@ class UserController extends Controller
       if (Auth::user()->is_admin == 1) {
         $persona = User::find($request->id); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
 
-        $persona->name = $request['name'];
-        $persona->surname = $request['surname'];
+        $persona->name = ucwords($request['name']);
+        $persona->surname = ucwords($request['surname']);
         $persona->gender = $request['gender'];
         $persona->birthdate = $request['birthdate'];
         $persona->address = $request['address'];
-        $persona->city = $request['city'];
+        $persona->city = ucwords($request['city']);
         $persona->between_streets = $request['between_streets'];
         $persona->phone = $request['phone'];
         $persona->cel = $request['cel'];

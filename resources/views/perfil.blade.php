@@ -2,11 +2,93 @@
 
 @section('content')
 <div class="container">
+    @if(Auth::user()->is_admin == 1)
+    <div class="alert alert-danger text-center" role="alert">
+        Usted ingresó al sistema como <b>administrador</b> por lo cual no puede realizar acciones aquí. Necesita ser
+        Indio.
+        <br>
+        <br>
+        <a href="/adminpanel"><button type="button" class="btn btn-primary">Ir al panel de Administración</button></a>
+    </div>
+    @else
     <div class="row justify-content-center">
         @if(Auth::user()->parent_id != NULL)
-        <div class="alert alert-warning" role="alert">
-             No autorizado.<br>Todavía no está habilitada la entrada de Indios al sistema. Dejá que tu Cacique se ocupe de todo 😎.
+        <div class="col-md-8">
+            <div class="card">
+                <h5 class="card-header">Bienvenido {{Auth::user()->name}}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Tu cacique se está encargando de todo 🤩.</h5>
+                    <p class="card-text">Mientras tanto podés chequear que tus datos sean correctos, en caso de haber
+                        alguno érroneo <b>debés avisarle a tu cacique para que los corrija.</b></p>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{Auth::user()->name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Apellido</th>
+                            <td>{{Auth::user()->surname}}</td>
+                        </tr>
+                        <tr>
+                            <th>DNI</th>
+                            <td>{{Auth::user()->dni}}</td>
+                        </tr>
+                        <tr>
+                            <th>Sexo</th>
+                            <td>{{(Auth::user()->gender == 'M') ? 'Masculino' : 'Femenino'}}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Nacimiento</th>
+                            <td>{{date("d-m-Y", strtotime(Auth::user()->birthdate))}}
+                                <small class="text-muted">
+                                    (dd-mm-aaaa)
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{Auth::user()->email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Telefono</th>
+                            <td>{{Auth::user()->phone}}</td>
+                        </tr>
+                        <tr>
+                            <th>Celular</th>
+                            <td>{{Auth::user()->cel}}</td>
+                        </tr>
+                        <tr>
+                            <th>Dirección</th>
+                            <td>{{Auth::user()->address}}</td>
+                        </tr>
+                        <tr>
+                            <th>Entrecalles</th>
+                            <td>{{Auth::user()->between_streets}}</td>
+                        </tr>
+                        <tr>
+                            <th>Localidad</th>
+                            <td>{{Auth::user()->city}}</td>
+                        </tr>
+                        <tr>
+                            <th>Escuela</th>
+                            <td>{{Auth::user()->school}}</td>
+                        </tr>
+                        <tr>
+                            <th>Año escolar</th>
+                            <td>{{Auth::user()->grade}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+
         @else
         <div class="col-md-8 text-center">
             <div class="row">
@@ -17,6 +99,7 @@
                             {{ Auth::user()->name }} {{ Auth::user()->surname }}
                         </div>
                     </div>
+                    <br>
                 </div>
                 <div class="col-md-6">
                     <div class="card">
@@ -140,5 +223,6 @@
         </div>
         @endif
     </div>
+    @endif
 </div>
 @endsection
