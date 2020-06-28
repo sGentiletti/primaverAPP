@@ -62,7 +62,7 @@
             </div>
 
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label>Fecha de Nacimiento</label>
                 <input required name="birthdate" value="{{old('birthdate')}}" type="date" class="form-control @error('birthdate') is-invalid @enderror" placeholder="DD/MM/AAAA">
                 @error('birthdate')
@@ -71,7 +71,7 @@
                   </span>
                 @enderror
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label>Dirección de Correo Electrónico</label>
                 <input required name="email" value="{{old('email')}}" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="johnappleseed@sejuturdera.com.ar">
                 @error('email')
@@ -79,6 +79,17 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+              </div>
+              <div class="form-group col-md-4">
+                  <label>Repetir Correo Electrónico</label>
+                  <input required name="email_confirmation" value="{{old('email_confirmation')}}" type="email"
+                      class="form-control @error('email') is-invalid @enderror"
+                      placeholder="johnappleseed@sejuturdera.com.ar">
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
               </div>
             </div>
 

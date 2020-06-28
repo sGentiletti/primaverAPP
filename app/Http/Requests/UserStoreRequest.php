@@ -44,12 +44,12 @@ class UserStoreRequest extends FormRequest
         'address' => 'required|string|max:255',
         'city' => 'required|string|max:255',
         'between_streets' => 'nullable|string|max:255',
-        'phone' => 'numeric|digits_between:8,15',
+        'phone' => 'nullable|numeric|digits_between:8,15',
         'cel' => 'required|numeric|digits_between:8,15',
         'school' => 'required|string|max:255',
-        'grade' => 'required|numeric|max:6|regex:/^[0-9]*$/',
+        'grade' => 'required|numeric|between:2,7|regex:/^[0-9]*$/',
         'dni' => ['required', 'digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
-        'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
+        'email' => ['confirmed', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
         'birthdate' => 'required|date|date_format:Y-m-d',
         ];
     }
@@ -71,6 +71,7 @@ class UserStoreRequest extends FormRequest
             'surname.regex' => 'El apellido no puede contener números ni signos.',
             'dni.regex' => 'El DNI no puede contener letras ni símbolos.',
             'dni.max' => 'El DNI no puede contener mas de :max números.',
+            'dni.digits' => 'No parece un DNI válido.',
             'grade.regex' => 'No ingreses la división del curso. Solo el año al que asiste.',
             'gender.required' => 'Seleccioná un sexo.',
             'dni.unique' => 'No podemos continuar porque ya hay alguien registrado con ese DNI.',

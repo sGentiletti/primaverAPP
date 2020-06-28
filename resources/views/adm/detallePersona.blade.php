@@ -72,12 +72,24 @@
               </div>
               <div class="form-group col-md-6">
                 <label>Dirección de Correo Electrónico</label>
-                <input required name="email" value="{{$persona->email}}" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="johnappleseed@sejuturdera.com.ar">
+                <input readonly="readonly" name="email" value="{{$persona->email}}" type="email"
+                    class="form-control @error('email') is-invalid @enderror"
+                    placeholder="johnappleseed@sejuturdera.com.ar">
                 @error('email')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+              </div>
+              <div class="form-group col-md-6">
+                  <input readonly="readonly" name="email_confirmation" value="{{$persona->email}}" type="hidden"
+                      class="form-control @error('email') is-invalid @enderror"
+                      placeholder="johnappleseed@sejuturdera.com.ar">
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
               </div>
             </div>
 
