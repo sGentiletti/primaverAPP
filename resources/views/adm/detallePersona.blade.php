@@ -63,7 +63,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>Fecha de Nacimiento</label>
-                <input required name="birthdate" value="{{$persona->birthdate}}" type="date" class="form-control @error('birthdate') is-invalid @enderror" placeholder="DD/MM/AAAA">
+                <input required name="birthdate" value="{{$persona->birthdate}}" type="date" class="form-control @error('birthdate') is-invalid @enderror" placeholder="AAAA-DD-MM">
                 @error('birthdate')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>

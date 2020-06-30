@@ -50,7 +50,7 @@ class UserStoreRequest extends FormRequest
         'grade' => 'required|numeric|between:2,7|regex:/^[0-9]*$/',
         'dni' => ['required', 'digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
         'email' => ['confirmed', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
-        'birthdate' => 'required|date|date_format:Y-m-d',
+        'birthdate' => 'required|date|date_format:Y-m-d|before:12 years ago',
         ];
     }
 
@@ -76,8 +76,8 @@ class UserStoreRequest extends FormRequest
             'gender.required' => 'Seleccioná un sexo.',
             'dni.unique' => 'No podemos continuar porque ya hay alguien registrado con ese DNI.',
             'email.unique' => 'Vaya! Ya hay alguien registrado con ese email.',
-            'birthdate.date' => 'Fecha incorrecta.',
-            'birthdate.date_format' => 'Formato incorrecto de fecha.'
+            'birthdate.date' => 'Fecha incorrecta. Procura usar - en vez de /',
+            'birthdate.date_format' => 'Procura que el formato sea YYYY-MM-DD'
         ];
     }
 }

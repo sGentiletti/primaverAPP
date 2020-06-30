@@ -23,6 +23,13 @@
                 </div>
             </div>
             <br>
+            @if (\Carbon\Carbon::parse(Auth::user()->birthdate)->age >= 18)
+            <div class="alert alert-info">
+                <h4 class="alert-heading">Sos mayor de 18</h4>
+                <p>Recordá que al ser mayor de 18 años debés presentar el <b>certificado de alumno regular</b> cuando te
+                    lo indiquemos.</p>
+            </div>
+            @endif
             <div class="card">
                 <table class="table">
                     <tbody>
@@ -88,8 +95,8 @@
             </div>
         </div>
 
-
         @else
+
         <div class="col-md-8 text-center">
             <div class="row">
                 <div class="col-md-6">
@@ -98,6 +105,14 @@
                         <div class="card-body">
                             {{ Auth::user()->name }} {{ Auth::user()->surname }}
                         </div>
+                        @if (\Carbon\Carbon::parse(Auth::user()->birthdate)->age >= 18)
+                        <div class="alert alert-info">
+                            <h4 class="alert-heading">Sos mayor de 18</h4>
+                            <p>Recordá que al ser mayor de 18 años debés presentar el <b>certificado de
+                                    alumno regular</b> cuando te
+                                lo indiquemos.</p>
+                        </div>
+                        @endif
                     </div>
                     <br>
                 </div>
@@ -198,8 +213,10 @@
                     @if($indios->count() == 0)
                     <br>
                     <div class="alert alert-primary" role="alert">
-                        Todavía no agregaste personas a tu tribu.<br>Apretá el boton "Agregar Persona" para comenzar a
-                        crear tu lista.
+                        <h4 class="alert-heading">Parece que no hay nadie...</h4>
+                        Una tribu necesita indios... a no ser que quieras estar como Milhouse.<br>¡Comenzá agregando
+                        personas!
+                        <hr><img loading="lazy" src="https://media.giphy.com/media/VfyC5j7sR4cso/giphy.gif">
                     </div>
                     @endif
                 </div>
