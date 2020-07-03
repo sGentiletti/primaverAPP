@@ -98,7 +98,7 @@
                     <div class="alert alert-info" role="alert">
                         <h4 class="alert-heading">Atención secretaría:</h4>
                         <p>Recuerden que al momento de ingresar una dirección de email la misma <strong>debe existir</strong>. Recomendamos uso de dominios conocidos como gmail.com, hotmail.com, outlook.com, yahoo.com, etc. y revisar la carpeta de <b>spam</b> en caso de que no los reciban (y marcar los mismos como no spam).</p>
-                        <p>Como alternativa pueden usar <a target="_blank" href="http://www.emailtemporalgratis.com/#/gustr.com/Flaul1928/">emails temporales</a>, recuerden que si utilizan este servcio los correos pueden demorar hasta 2 minutos en mostrarse en la web, no es necesario refrescar la página.</p>
+                        <p>Como alternativa pueden usar <a target="_blank" href="http://www.emailtemporalgratis.com/#/gustr.com/Flaul1928/">emails temporales</a>, recuerden que si utilizan este servicio los correos pueden demorar hasta 2 minutos en mostrarse en la web, no es necesario refrescar la página.</p>
                         <hr>
                         <p class="mb-0">Te regalamos una galletita por tu tiempo 🍪 <br>Att: Equipo de SeJu Digital.</p>
                     </div>
