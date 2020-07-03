@@ -50,7 +50,7 @@ class UserStoreRequest extends FormRequest
         'grade' => 'required|numeric|between:2,7|regex:/^[0-9]*$/',
         'dni' => ['required', 'digits:8', 'regex:/^[0-9]*$/', Rule::unique('users')->ignore($user)],
         'email' => ['confirmed', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
-        'birthdate' => 'required|date|date_format:Y-m-d|before:12 years ago',
+        'birthdate' => 'required|date|date_format:Y-m-d',
         ];
     }
 
