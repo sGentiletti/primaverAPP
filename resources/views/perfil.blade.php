@@ -15,7 +15,7 @@
         @if(Auth::user()->parent_id != NULL)
         <div class="col-md-8">
             <div class="card">
-                <h5 class="card-header">Bienvenido {{Auth::user()->name}}</h5>
+                <h5 class="card-header">Bienvenido, {{Auth::user()->name}}</h5>
                 <div class="card-body">
                     <h5 class="card-title">Tu cacique se está encargando de todo 🤩.</h5>
                     <p class="card-text">Mientras tanto podés chequear que tus datos sean correctos, en caso de haber

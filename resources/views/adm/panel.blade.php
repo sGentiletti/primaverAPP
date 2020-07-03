@@ -8,13 +8,13 @@
           <div class="card-header"><b>Panel de Administración</b></div>
           <div class="card-body">
             <div class="row">
-              <div class="col">
+              <div class="col-sm-12 col-md-6 mb-3">
                 <a class="btn btn-primary" href="{{route('registrarCaciqueForm')}}">Nuevo Cacique</a>
               </div>
-              <div class="col">
+              <div class="col-sm-12 col-md-6">
                 <form class="" action="{{route('buscarPersonaPorDni', ['dni'])}}" method="get">
                   @csrf
-                  <div class="input-group mb-3">
+                  <div class="input-group">
                     <input name="dni" type="number" class="form-control" placeholder="Buscar por DNI">
                     <div class="input-group-append">
                       <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Consultar DNI</button>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <br>
-        <div class="card">
+        <div class="card overflow">
           <div class="card-header"><b>Estadísticas de la SeJu</b></div>
           <div class="card-body d-flex justify-content-center">
             <div class="row">
