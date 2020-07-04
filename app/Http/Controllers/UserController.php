@@ -47,17 +47,25 @@ class UserController extends Controller
             $total_indios++;
         }
 
-        $min_total = 3;
-        $min_f = 1;
-        $min_m = 1;
+        $min_total = 12;
+        $min_f = 6;
+        $min_m = 6;
 
-        $max_total = 4;
-        $max_f = 3;
-        $max_m = 3;
-
+        $max_total = 16;
+        $max_f = 10;
+        $max_m = 10;
+        
+        //Cumple el minimo y no sobrepasa el máximo
+        if ($total_indios >= $min_total && $total_indios <= $max_total) {
+          //cumple el minimo de MyF y no sobrepasa el total de indios.
+          if ($cant_m >= $min_m && $cant_m <= $max_m && $cant_f >= $min_f && $cant_f <= $max_f) {
+            $canConfirmTribu = true;
+          }
+        }
+        /*
         if ($total_indios >= $min_total && $total_indios <= $max_total && $cant_f >= $min_f && $cant_f <= $max_f && $cant_m >= $min_m && $cant_m <= $max_m) {
             $canConfirmTribu = true;
-        }
+        }*/
 
         $dataTribu = (object)[
           'cant_f' => $cant_f,
