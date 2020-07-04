@@ -7,7 +7,7 @@
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Roger that!</h4>
                 <p>Recibimos tu mensaje 💌 Nuestros ingenieros se pondrán a descifrar lo que intentaste comunicarnos,
-                    luego se comunicarán con vos para resolver tu duda 😎</p>
+                    luego se contactarán con vos para resolver tu duda 😎</p>
                 <hr>
                 <p class="mb-0">Te regalamos una galletita por tu tiempo 🍪</p>
             </div>

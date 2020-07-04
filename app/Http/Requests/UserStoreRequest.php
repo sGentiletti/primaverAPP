@@ -76,8 +76,8 @@ class UserStoreRequest extends FormRequest
             'gender.required' => 'Seleccioná un sexo.',
             'dni.unique' => 'No podemos continuar porque ya hay alguien registrado con ese DNI.',
             'email.unique' => 'Vaya! Ya hay alguien registrado con ese email.',
-            'birthdate.date' => 'Fecha incorrecta.',
-            'birthdate.date_format' => 'Formato incorrecto de fecha.'
+            'birthdate.date' => 'Fecha incorrecta. Procura usar - en vez de /',
+            'birthdate.date_format' => 'Procura que el formato sea YYYY-MM-DD'
         ];
     }
 }

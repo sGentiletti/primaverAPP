@@ -73,7 +73,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>Fecha de Nacimiento</label>
-                <input required name="birthdate" value="{{$persona->birthdate}}" type="date" class="form-control @error('birthdate') is-invalid @enderror" placeholder="DD/MM/AAAA">
+                <input required name="birthdate" value="{{$persona->birthdate}}" type="date" class="form-control @error('birthdate') is-invalid @enderror" placeholder="AAAA-DD-MM">
                 @error('birthdate')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -180,7 +180,7 @@
             @else
               <div class="alert alert-danger" role="alert">
                 Error! No se ha encontrado a esa persona o no tenés permisos suficientes para ver su información. Si crees
-                que se trata de un error <a href="#">contactanos</a>.
+                que se trata de un error <a href="/contacto">contactanos</a>..
               </div>
             @endif
           </div>
