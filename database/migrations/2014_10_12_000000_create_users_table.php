@@ -18,14 +18,14 @@ class CreateUsersTable extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->string('surname');
-            $table->unsignedInteger('dni')->unique();
+            $table->string('dni')->unique();
             $table->char('gender', 1);
             $table->date('birthdate')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('between_streets')->nullable();
-            $table->unsignedInteger('phone')->nullable();
-            $table->unsignedInteger('cel')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('cel')->nullable();
             $table->string('school')->nullable();
             $table->integer('grade')->nullable();
             $table->string('email')->unique();
