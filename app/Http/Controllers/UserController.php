@@ -278,4 +278,20 @@ class UserController extends Controller
       return view('adm/listadoTribu', compact('indios', 'cacique'));
     }
 
+    public function recordatorioPreinscripcion(){
+      //Buscar a todos los caciques
+      $caciques = User::whereNull('parent_id')->get();
+      //Remover a los que ya se hayan confirmado la preinscripcion
+      $confirmados = User::has('tribu')->get();
+
+      foreach ($caciques as $cacique) {
+        echo "$cacique->id <br>";
+      }
+
+      foreach ($confirmados as $confirmado) {
+        echo "confirmado: $confirmado->id <br>";
+      }
+      //Avisar a los no preinscriptos.
+    }
+
 }

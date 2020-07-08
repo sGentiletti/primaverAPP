@@ -42,6 +42,8 @@ Route::prefix('/perfil')->middleware('auth', 'verified')->group(function () {
 
     //Accion de confirmar tribu como Cacique
     Route::get('confirmar', 'TribuController@store')->name('confirmarAction');
+
+    Route::get('api/recordatorio', 'UserController@recordatorioPreinscripcion');
 });
 
 
