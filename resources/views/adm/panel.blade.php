@@ -52,25 +52,27 @@
         <div class="card">
           <div class="card-header"><b>Estadísticas de la SeJu</b></div>
           <div class="card-body d-flex justify-content-center">
-            <div class="row table-responsive">
-              <table class="table mb-0">
-                <thead>
-                  <tr>
-                    <th scope="col">Indios</th>
-                    <th scope="col">Caciques/Tribus</th>
-                    <th scope="col">Tribus Confirmadas</th>
-                    <th scope="col">Tribus sin confirmar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{$datos['total']}}</td>
-                    <td>{{$datos['totalCaciques']}}</td>
-                    <td>{{$datos['totalConfirmadas']}}</td>
-                    <td>{{($datos['totalCaciques'] - $datos['totalConfirmadas'])}}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">Indios</th>
+                      <th scope="col">Caciques/Tribus</th>
+                      <th scope="col">Tribus Confirmadas</th>
+                      <th scope="col">Tribus sin confirmar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{$datos['total']}}</td>
+                      <td>{{$datos['totalCaciques']}}</td>
+                      <td>{{$datos['totalConfirmadas']}}</td>
+                      <td>{{($datos['totalCaciques'] - $datos['totalConfirmadas'])}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +107,7 @@
                         echo "class='table-success'";
                       }
                     @endphp
-                  >
+                    >
                     <th scope="row">{{$n}}</th>
                     @php
                       $n++;

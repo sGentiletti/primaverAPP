@@ -59,6 +59,7 @@
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellido</th>
                   <th scope="col">DNI</th>
+                  <th scope="col">Email Verificado</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,6 +75,17 @@
                     <td>{{$cacique->name}}</td>
                     <td>{{$cacique->surname}}</td>
                     <td><a href="/adminpanel/persona/{{$cacique->dni}}">{{$cacique->dni}}</a></td>
+                    <td>
+                      @if ($cacique->email_verified_at)
+                          <h5>
+                              <span class="badge badge-success">Verificado</span>
+                          </h5>
+                      @else
+                          <h5>
+                              <span class="badge badge-danger">Sin Verificar</span>
+                          </h5>
+                      @endif
+                  </td>
                   </tr>
                 @endif
                 @foreach ($indios as $indio)
@@ -86,6 +98,17 @@
                       <td>{{$indio->name}}</td>
                       <td>{{$indio->surname}}</td>
                       <td><a href="/adminpanel/persona/{{$indio->dni}}">{{$indio->dni}}</a></td>
+                      <td>
+                        @if ($indio->email_verified_at)
+                            <h5>
+                                <span class="badge badge-success">Verificado</span>
+                            </h5>
+                        @else
+                            <h5>
+                                <span class="badge badge-danger">Sin Verificar</span>
+                            </h5>
+                        @endif
+                    </td>
                     </tr>
                   @endif
                 @endforeach
@@ -106,6 +129,7 @@
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellido</th>
                   <th scope="col">DNI</th>
+                  <th scope="col">Email Verificado</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,6 +145,17 @@
                     <td>{{$cacique->name}}</td>
                     <td>{{$cacique->surname}}</td>
                     <td><a href="/adminpanel/persona/{{$cacique->dni}}">{{$cacique->dni}}</a></td>
+                    <td>
+                      @if ($cacique->email_verified_at)
+                          <h5>
+                              <span class="badge badge-success">Verificado</span>
+                          </h5>
+                      @else
+                          <h5>
+                              <span class="badge badge-danger">Sin Verificar</span>
+                          </h5>
+                      @endif
+                  </td>
                   </tr>
                 @endif
                 @foreach ($indios as $indio)
@@ -133,6 +168,17 @@
                       <td>{{$indio->name}}</td>
                       <td>{{$indio->surname}}</td>
                       <td><a href="/adminpanel/persona/{{$indio->dni}}">{{$indio->dni}}</a></td>
+                      <td>
+                        @if ($indio->email_verified_at)
+                            <h5>
+                                <span class="badge badge-success">Verificado</span>
+                            </h5>
+                        @else
+                            <h5>
+                                <span class="badge badge-danger">Sin Verificar</span>
+                            </h5>
+                        @endif
+                    </td>
                     </tr>
                   @endif
                 @endforeach

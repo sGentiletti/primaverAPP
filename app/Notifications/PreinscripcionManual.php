@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RecordatorioPreinscribirse extends Notification implements ShouldQueue
+class PreinscripcionManual extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -41,11 +41,11 @@ class RecordatorioPreinscribirse extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                        ->subject('¿Pasó algo, ' . $notifiable['name'] . '? | Recordatorio de Preinscripción Incompleta')
+                        ->subject($notifiable['name'] . ', revisamos tu solicitud.')
                         ->greeting('Hola, ' . $notifiable['name'])
-                        ->line('Hemos notado que todavía no confirmaste tu preinscripción. ¿Está todo en orden?')
-                        ->line('Te recordamos que el último paso es confirmar tu tribu. Si te olvidaste de confirmar la preinscripción, ingresá a tu cuenta y buscá el botón "Confirmar Preinscripción". Si no te aparece, verificá cumplir con los requisitos para conformar una tribu y si tenes problemas, podes contactarnos a través del formulario en nuestra página web.')
-                        ->action('Quiero Preinscribirme', 'https://app.sejuturdera.com.ar/perfil');
+                        ->line('El departamento de Secretaría revisó tu solicitud y ha decidido preinscribirte pese a que quizás no cumplías con ciertos requisitos.')
+                        ->line('¿Qué significa ésto? Significa que tenemos tus datos y el de los demás solicitantes para verificarlos. Recordá que todavía no sos un indio inscripto, pero este paso es necesario para serlo.')
+                        ->line('Quedate atento a nuestras redes para cuando haya más información.');
     }
 
     /**

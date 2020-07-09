@@ -42,11 +42,15 @@ class UserController extends Controller
         $cant_f = Auth::user()->gender === 'F' ? 1 : 0;
         $cant_m = Auth::user()->gender === 'M' ? 1 : 0;
         $canConfirmTribu = false;
+        $emailVerified = 0; //0 si todos tienen el mail verificado, 1 si al menos 1 no lo tiene.
 
         foreach ($indios as $indio) {
             $cant_f = $cant_f + ($indio->gender === 'F' ? 1 : 0);
             $cant_m = $cant_m + ($indio->gender === 'M' ? 1 : 0);
             $total_indios++;
+            if (!$indio->email_verified_at) {
+              $emailVerified = 1;
+            }
         }
 
         $min_total = 12;
@@ -60,10 +64,11 @@ class UserController extends Controller
         //Cumple el minimo y no sobrepasa el máximo
         if ($total_indios >= $min_total && $total_indios <= $max_total) {
           //cumple el minimo de MyF y no sobrepasa el total de indios.
-          if ($cant_m >= $min_m && $cant_m <= $max_m && $cant_f >= $min_f && $cant_f <= $max_f) {
+          if ($cant_m >= $min_m && $cant_m <= $max_m && $cant_f >= $min_f && $cant_f <= $max_f && $emailVerified == 0) {
             $canConfirmTribu = true;
           }
         }
+
         /*
         if ($total_indios >= $min_total && $total_indios <= $max_total && $cant_f >= $min_f && $cant_f <= $max_f && $cant_m >= $min_m && $cant_m <= $max_m) {
             $canConfirmTribu = true;

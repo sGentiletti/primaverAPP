@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\TribuConfirmadaNotification;
+use App\Notifications\PreinscripcionManual;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tribu;
@@ -86,10 +87,10 @@ class TribuController extends Controller
         //Notificamos a todos los usuarios.
         //Primero al cacique
         $user = User::find($tribu->user_id);
-        $user->notify(new TribuConfirmadaNotification());
+        $user->notify(new PreinscripcionManual());
         //Despues buscamos a sus indios y los notificamos tambien.
-        //$indios = $user->indios;
-        //Notification::send($indios, new TribuConfirmadaNotification());
+        $indios = $user->indios;
+        Notification::send($indios, new PreinscripcionManual());
  
 
         return back();
