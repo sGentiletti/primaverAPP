@@ -76,6 +76,25 @@ class TribuController extends Controller
         return redirect('perfil');
     }
 
+    public function confirmacionManual($id){
+        $lastConfirmed = Tribu::orderByDesc('id')->first();
+
+        $tribu = Tribu::create([
+            'user_id' => $id,
+            'num_tribu' =>  $this->calculateNumTribu($lastConfirmed),
+        ]);
+        //Notificamos a todos los usuarios.
+        //Primero al cacique
+        $user = User::find($tribu->user_id);
+        $user->notify(new TribuConfirmadaNotification());
+        //Despues buscamos a sus indios y los notificamos tambien.
+        //$indios = $user->indios;
+        //Notification::send($indios, new TribuConfirmadaNotification());
+ 
+
+        return back();
+    }
+
     /**
      * Display the specified resource.
      *

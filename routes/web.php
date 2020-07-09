@@ -53,7 +53,10 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', 'UserController@mostrarListadoCaciques')->name('adminPanel');
 
     //Ver info de la Tribu del Cacique seleccionado
-    Route::get('tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus');
+    Route::get('tribu/{id}', 'UserController@verTribu')->name('listadoTribus');
+
+    //Buscar Tribu por Control
+    Route::get('tribuControl/{dni}', 'UserController@buscarPorControl')->name('buscarPorControl');
 
     //Buscar persona por dni
     Route::get('persona/{dni}', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni');
@@ -66,6 +69,9 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
         return view('adm/registrarCacique');
     })->name('registrarCaciqueForm');
     Route::post('registrar/store', 'UserController@registrarCacique')->name('registrarCacique');
+
+    //Preinscripción manual de Tribu
+    Route::post('/tribu/confirm/{id}', 'TribuController@confirmacionManual')->name('confirmacionManual');
 });
 
 //Miscellaneous routes

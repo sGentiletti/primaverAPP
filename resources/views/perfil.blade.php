@@ -200,7 +200,7 @@
                                     <a href="{{ route('detalleIndio', ['id' => $indio->id]) }}" class="btn btn-info"
                                         role="button active" aria-disabled="true">Ver /
                                         Editar</a>
-                                    <a href="{{ route('eliminarIndioAction', ['id' => $indio->id]) }}"
+                                    <a onclick="return confirm('¿Estás seguro? Esta acción no se puede deshacer')" href="{{ route('eliminarIndioAction', ['id' => $indio->id]) }}"
                                         class="btn btn-danger active" role="button" aria-disabled="true">Eliminar</a>
                                     @else
                                     No disponible

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\RecordatorioPreinscribirse;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Notifications\UsuarioEliminado;
@@ -225,6 +227,19 @@ class UserController extends Controller
       return view('adm/detallePersona', compact('persona'));
     }
 
+    public function buscarPorControl(Request $request)
+    {
+      $tribu = Tribu::where('num_tribu', $request->control)->first(); 
+      if ($tribu) {
+        $cacique = User::find($tribu->user_id);
+      }
+      else{
+        abort(403, 'No se encontraron resultados para ese número de control');
+      }
+
+      return $this->verTribu($cacique->id);
+    }
+
     public function actualizarDni(userStoreRequest $request){
       if (Auth::user()->is_admin == 1) {
         $persona = User::find($request->id); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
@@ -271,27 +286,20 @@ class UserController extends Controller
       return view('adm/panel', compact('caciques', 'datos'));
     }
 
-    public function mostrarListadoTribus($id)
+    public function verTribu($id)
     {
       $indios = User::find($id)->indios;
       $cacique = User::find($id);
-      return view('adm/listadoTribu', compact('indios', 'cacique'));
+      $control = Tribu::where('user_id', $cacique->id)->first();
+      return view('adm/listadoTribu', compact('indios', 'cacique', 'control'));
     }
 
     public function recordatorioPreinscripcion(){
-      //Buscar a todos los caciques
-      $caciques = User::whereNull('parent_id')->get();
-      //Remover a los que ya se hayan confirmado la preinscripcion
-      $confirmados = User::has('tribu')->get();
+      //Buscamos caciques que no hayan confirmado tribu
+      $caciques = User::doesnthave('tribu')->whereNull('parent_id')->where('is_admin', '0')->get();
 
-      foreach ($caciques as $cacique) {
-        echo "$cacique->id <br>";
-      }
-
-      foreach ($confirmados as $confirmado) {
-        echo "confirmado: $confirmado->id <br>";
-      }
       //Avisar a los no preinscriptos.
+      Notification::send($caciques, new RecordatorioPreinscribirse());
     }
 
 }
