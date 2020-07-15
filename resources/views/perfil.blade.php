@@ -99,7 +99,7 @@
 
         <div class="col-md-12 text-center">
             <div class="row">
-                <div class="col-sm-6 mb-3">
+                <div class="col-sm-12 col-md-6 mb-3">
                     <div class="card h-100">
                         <div class="card-header"><b>Cacique</b></div>
                         <div class="card-body">
@@ -115,10 +115,10 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-sm-12 col-md-6 mb-3">
                     <div class="card h-100">
                         <div class="card-header"><b>Información</b></div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <table class="table mb-0">
@@ -209,6 +209,7 @@
                                                 <li>Datos:</li>
                                                 <ul>
                                                     <li>Verificá que los datos sean reales y no estén mal escritos, en especial las direcciones de correo electrónico, de lo contrario podrías quedar eliminado.</li>
+                                                    <li>Todas las direcciones de correo electrónico deben estar <span class="badge badge-success">Verificadas</span>.</li>
                                                 </ul>
                                             </ul>
                                             </div>
@@ -235,7 +236,9 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
                                 <th scope="col">DNI</th>
-                                <th scope="col">Email Verificado</th>
+                                <th scope="col" data-toggle="tooltip" title="Indica si el usuario ha verificado su dirección de correo electrónico." class="d-flex justify-content-center align-items-center">
+                                    Email<ion-icon name="information-circle-sharp" size="small"> </ion-icon>
+                                </th>
                                 <th scope="col">Acción</th>
                             </tr>
                         </thead>
@@ -310,4 +313,11 @@
     </div>
     @endif
 </div>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 @endsection

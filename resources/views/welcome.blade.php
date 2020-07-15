@@ -83,11 +83,6 @@
                 <div class="title m-b-md">
                     PrimaverAPP
                 </div>
-                <span>Entorno de desarrollo remoto</span>
-                <br>
-                <span>Uso interno solamente</span>
-                <br>
-                <span>Don't leak our hard work</span>
             </div>
         </div>
     </body>

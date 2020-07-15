@@ -49,7 +49,7 @@
 
     <div class="row">
       <div class="col-sm-12 col-md-6 my-1">
-        <div class="card text-center" style="height: 100%;">
+        <div class="card text-left" style="height: 100%;">
           <div class="card-header">Masculinos</div>
           <div class="card-body">
             <table class="table">
@@ -59,7 +59,8 @@
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellido</th>
                   <th scope="col">DNI</th>
-                  <th scope="col">Email Verificado</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Edad</th>
                 </tr>
               </thead>
               <tbody>
@@ -86,6 +87,13 @@
                           </h5>
                       @endif
                   </td>
+                  <td>
+                    @if (Carbon\Carbon::parse($cacique->birthdate)->age >= 18)                        
+                      <span style="font-size: 13px;" class="badge badge-danger">{{Carbon\Carbon::parse($cacique->birthdate)->age}}</span>
+                    @else 
+                      <span style="font-size: 13px;" class="badge">{{Carbon\Carbon::parse($cacique->birthdate)->age}}</span>
+                    @endif
+                  </td>
                   </tr>
                 @endif
                 @foreach ($indios as $indio)
@@ -109,6 +117,13 @@
                             </h5>
                         @endif
                     </td>
+                    <td>
+                      @if (Carbon\Carbon::parse($indio->birthdate)->age >= 18)                        
+                        <span style="font-size: 13px;" class="badge badge-danger">{{Carbon\Carbon::parse($indio->birthdate)->age}}</span>
+                      @else 
+                        <span style="font-size: 13px;" class="badge">{{Carbon\Carbon::parse($indio->birthdate)->age}}</span>
+                      @endif
+                    </td>
                     </tr>
                   @endif
                 @endforeach
@@ -119,7 +134,7 @@
       </div>
 
       <div class="col-sm-12 col-md-6 my-1">
-        <div class="card text-center" style="height: 100%;">
+        <div class="card text-left" style="height: 100%;">
           <div class="card-header">Femeninos</div>
           <div class="card-body">
             <table class="table">
@@ -129,7 +144,8 @@
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellido</th>
                   <th scope="col">DNI</th>
-                  <th scope="col">Email Verificado</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Edad</th>
                 </tr>
               </thead>
               <tbody>
@@ -156,6 +172,13 @@
                           </h5>
                       @endif
                   </td>
+                  <td>
+                    @if (Carbon\Carbon::parse($cacique->birthdate)->age >= 18)                        
+                      <span style="font-size: 13px;" class="badge badge-danger">{{Carbon\Carbon::parse($cacique->birthdate)->age}}</span>
+                    @else 
+                      <span style="font-size: 13px;" class="badge">{{Carbon\Carbon::parse($cacique->birthdate)->age}}</span>
+                    @endif
+                  </td>
                   </tr>
                 @endif
                 @foreach ($indios as $indio)
@@ -178,6 +201,13 @@
                                 <span class="badge badge-danger">Sin Verificar</span>
                             </h5>
                         @endif
+                    </td>
+                    <td>
+                      @if (Carbon\Carbon::parse($indio->birthdate)->age >= 18)                        
+                        <span style="font-size: 13px;" class="badge badge-danger">{{Carbon\Carbon::parse($indio->birthdate)->age}}</span>
+                      @else 
+                        <span style="font-size: 13px;" class="badge">{{Carbon\Carbon::parse($indio->birthdate)->age}}</span>
+                      @endif
                     </td>
                     </tr>
                   @endif
