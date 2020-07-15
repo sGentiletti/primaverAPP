@@ -74,7 +74,7 @@ class AgregadoPorAdminNotification extends Notification implements ShouldQueue
     {
         return URL::temporarySignedRoute(
             'verification.verify',
-            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            Carbon::now()->addMinutes(10080), //Expira en una semana desde que se generó.
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),

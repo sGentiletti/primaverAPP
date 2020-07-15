@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes(['verify' => true]);
+Auth::routes([
+    'register' => false, // Registration Routes...
+    'verify' => true, // Email Verification Routes...
+]);
 Route::get('registrar-cacique', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('registrar-cacique', 'Auth\RegisterController@register');
 
@@ -42,6 +45,9 @@ Route::prefix('/perfil')->middleware('auth', 'verified')->group(function () {
 
     //Accion de confirmar tribu como Cacique
     Route::get('confirmar', 'TribuController@store')->name('confirmarAction');
+
+    //Recordatorio para los caciques que no confirmaron. (Mantener comentado porque no se usa)
+    //Route::get('api/recordatorio', 'UserController@recordatorioPreinscripcion');
 });
 
 
@@ -51,7 +57,10 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', 'UserController@mostrarListadoCaciques')->name('adminPanel');
 
     //Ver info de la Tribu del Cacique seleccionado
-    Route::get('tribu/{id}', 'UserController@mostrarListadoTribus')->name('listadoTribus');
+    Route::get('tribu/{id}', 'UserController@verTribu')->name('listadoTribus');
+
+    //Buscar Tribu por Control
+    Route::get('tribuControl/{dni}', 'UserController@buscarPorControl')->name('buscarPorControl');
 
     //Buscar persona por dni
     Route::get('persona/{dni}', 'UserController@buscarPersonaPorDni')->name('buscarPersonaPorDni');
@@ -64,6 +73,9 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
         return view('adm/registrarCacique');
     })->name('registrarCaciqueForm');
     Route::post('registrar/store', 'UserController@registrarCacique')->name('registrarCacique');
+
+    //Preinscripción manual de Tribu
+    Route::post('/tribu/confirm/{id}', 'TribuController@confirmacionManual')->name('confirmacionManual');
 });
 
 //Miscellaneous routes

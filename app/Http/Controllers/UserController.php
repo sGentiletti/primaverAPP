@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\RecordatorioPreinscribirse;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Notifications\UsuarioEliminado;
@@ -40,11 +42,15 @@ class UserController extends Controller
         $cant_f = Auth::user()->gender === 'F' ? 1 : 0;
         $cant_m = Auth::user()->gender === 'M' ? 1 : 0;
         $canConfirmTribu = false;
+        $emailVerified = 0; //0 si todos tienen el mail verificado, 1 si al menos 1 no lo tiene.
 
         foreach ($indios as $indio) {
             $cant_f = $cant_f + ($indio->gender === 'F' ? 1 : 0);
             $cant_m = $cant_m + ($indio->gender === 'M' ? 1 : 0);
             $total_indios++;
+            if (!$indio->email_verified_at) {
+              $emailVerified = 1;
+            }
         }
 
         $min_total = 12;
@@ -58,10 +64,11 @@ class UserController extends Controller
         //Cumple el minimo y no sobrepasa el máximo
         if ($total_indios >= $min_total && $total_indios <= $max_total) {
           //cumple el minimo de MyF y no sobrepasa el total de indios.
-          if ($cant_m >= $min_m && $cant_m <= $max_m && $cant_f >= $min_f && $cant_f <= $max_f) {
+          if ($cant_m >= $min_m && $cant_m <= $max_m && $cant_f >= $min_f && $cant_f <= $max_f && $emailVerified == 0) {
             $canConfirmTribu = true;
           }
         }
+
         /*
         if ($total_indios >= $min_total && $total_indios <= $max_total && $cant_f >= $min_f && $cant_f <= $max_f && $cant_m >= $min_m && $cant_m <= $max_m) {
             $canConfirmTribu = true;
@@ -225,6 +232,19 @@ class UserController extends Controller
       return view('adm/detallePersona', compact('persona'));
     }
 
+    public function buscarPorControl(Request $request)
+    {
+      $tribu = Tribu::where('num_tribu', $request->control)->first(); 
+      if ($tribu) {
+        $cacique = User::find($tribu->user_id);
+      }
+      else{
+        abort(403, 'No se encontraron resultados para ese número de control');
+      }
+
+      return $this->verTribu($cacique->id);
+    }
+
     public function actualizarDni(userStoreRequest $request){
       if (Auth::user()->is_admin == 1) {
         $persona = User::find($request->id); //Instanciamos a la persona por el DNI, ya que nunca van a haber DNI repetidos en la DB.
@@ -271,11 +291,20 @@ class UserController extends Controller
       return view('adm/panel', compact('caciques', 'datos'));
     }
 
-    public function mostrarListadoTribus($id)
+    public function verTribu($id)
     {
       $indios = User::find($id)->indios;
       $cacique = User::find($id);
-      return view('adm/listadoTribu', compact('indios', 'cacique'));
+      $control = Tribu::where('user_id', $cacique->id)->first();
+      return view('adm/listadoTribu', compact('indios', 'cacique', 'control'));
+    }
+
+    public function recordatorioPreinscripcion(){
+      //Buscamos caciques que no hayan confirmado tribu
+      $caciques = User::doesnthave('tribu')->whereNull('parent_id')->where('is_admin', '0')->get();
+
+      //Avisar a los no preinscriptos.
+      Notification::send($caciques, new RecordatorioPreinscribirse());
     }
 
 }

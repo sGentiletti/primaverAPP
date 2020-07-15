@@ -2,7 +2,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8 text-center">
+      <div class="col-sm-12 col-lg-8 text-center">
         <div class="card">
           @if ($persona != NULL)
           <div class="card-header"><b>Procure revisar bien los datos antes de enviar el formulario.</b></div><br>
@@ -164,7 +164,7 @@
                 @enderror
               </div>
             </div>
-              <button type="submit" class="btn btn-primary">Actualizar</button>
+              <button type="submit" class="btn btn-primary mb-3">Actualizar</button>
           </form>
           @else
             <div class="alert alert-danger" role="alert">
@@ -172,9 +172,6 @@
             </div>
           @endif
         </div>
-        <br>
-        <br>
-        <a class="btn btn-primary" href="{{route('adminPanel')}}">Volver al Panel de Administración</a>
       </div>
     </div>
   </div>

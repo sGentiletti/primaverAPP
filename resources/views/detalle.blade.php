@@ -186,11 +186,6 @@
           </div>
         </div>
         <br>
-        <div class="text-center">
-          <a href="{{ route('perfil') }}" class="btn btn-primary">
-            Volver atrás
-          </a>
-        </div>
       </div>
     </div>
   </div>
