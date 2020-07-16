@@ -100,14 +100,14 @@
                   $n = 1;
                 @endphp
                 @foreach ($caciques as $cacique)
+                @php
+                  $foo = App\Tribu::where("user_id", $cacique->id)->first(); //Busca en el modelo de Tribu la fila con la columna "user_id" = $cacique->id. Si no encuentra nada, devuelve nulo, significando que el cacique no confirmo su tribu.
+                @endphp
                   <tr
-                    @php
-                      $foo = App\Tribu::where("user_id", $cacique->id)->first(); //Busca en el modelo de Tribu la fila con la columna "user_id" = $cacique->id. Si no encuentra nada, devuelve nulo, significando que el cacique no confirmo su tribu.
-                      if ($foo != NULL) {
-                        echo "class='table-success'";
-                      }
-                    @endphp
-                    >
+                  @if ($foo != NULL)
+                    class="table-success"
+                  @endif
+                  >
                     <th scope="row">{{$n}}</th>
                     @php
                       $n++;
