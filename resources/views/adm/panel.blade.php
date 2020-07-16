@@ -115,7 +115,7 @@
                     <td>{{$cacique->name}}</td>
                     <td>{{$cacique->surname}}</td>
                     <td><a href="/adminpanel/persona/{{$cacique->dni}}">{{$cacique->dni}}</a></td>
-                    @if ($foo['num_tribu'])
+                    @if (isset($foo['num_tribu']))
                       <td> 
                         <h4>
                           <span class='badge badge-success'>{{$foo['num_tribu']}}</span>
