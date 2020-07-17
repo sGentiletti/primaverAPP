@@ -3,16 +3,18 @@
 
 <head>
     <title>PrimaverApp | SeJu Turdera</title>
+    <meta name="title" content="PrimaverApp | SeJu Turdera">
+    <meta name="description" content="Gestioná tu tribu y conocé el estado de tu inscripción. Con la nueva aplicación de la Semana de la Juventud te convertís en un cacique con superpoderes.">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="PrimaverApp - La plataforma online de la Semana de la Juventud">
     <meta name="keywords" content="SeJu, semana de la juventud, turdera, buenos aires, comunidad, comunidades, seju">
     <!-- Social Media -->
     <meta property="og:title" content="PrimaverApp | SeJu Turdera">
-    <meta property="og:description" content="PrimaverApp - La plataforma online de la Semana de la Juventud">
+    <meta property="og:description" content="Gestioná tu tribu y conocé el estado de tu inscripción. Con la nueva aplicación de la Semana de la Juventud te convertís en un cacique con superpoderes.">
     <meta property="og:image" content="https://app.sejuturdera.com.ar/img/thumbnail.jpg">
     <meta property="og:url" content="https://app.sejuturdera.com.ar">
+    <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <!--  Non-Essential, But Recommended -->
     <meta property="og:site_name" content="PrimaverApp | SeJu Turdera">
