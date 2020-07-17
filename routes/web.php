@@ -81,7 +81,8 @@ Route::prefix('adminpanel')->middleware(['auth', 'admin'])->group(function () {
 //Miscellaneous routes
 Route::get('/contacto', 'ContactoController@index')->name('contacto')->middleware("auth");
 Route::post('/contacto', 'ContactoController@sendEmail')->middleware("auth");
-
+//Contacto desde vista welcome.
+Route::post('/contactoapi', 'ContactoController@contacto');
 
 
 
