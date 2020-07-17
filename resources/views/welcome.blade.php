@@ -8,6 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="PrimaverApp - La plataforma online de la Semana de la Juventud">
     <meta name="keywords" content="SeJu, semana de la juventud, turdera, buenos aires, comunidad, comunidades, seju">
+    <!-- Social Media -->
+    <meta property="og:title" content="PrimaverApp | SeJu Turdera">
+    <meta property="og:description" content="PrimaverApp - La plataforma online de la Semana de la Juventud">
+    <meta property="og:image" content="https://app.sejuturdera.com.ar/img/thumbnail.jpg">
+    <meta property="og:url" content="https://app.sejuturdera.com.ar">
+    <meta name="twitter:card" content="summary_large_image">
+    <!--  Non-Essential, But Recommended -->
+    <meta property="og:site_name" content="PrimaverApp | SeJu Turdera">
+    <meta name="twitter:image:alt" content="Website thumbnail">
 
     <!-- Font -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
