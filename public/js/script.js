@@ -99,3 +99,36 @@ $(function() {
     }
 
 }); /* End Fn */
+
+/* FETCH FORM */
+var formulario = $('#formulario').get(0); //get(0) consigue el primer elemento. Como en laravel eloquent ->first();
+$('#formulario').submit(function (e) { 
+    e.preventDefault();
+    $('#submitLoader').removeClass('d-none');
+    var datos = new FormData(formulario);
+
+    fetch('/contactoapi', {
+        method: 'POST',
+        body: datos
+    })
+    .then(res => res.json())
+    .then(data => {
+        $('#submitLoader').addClass('d-none');
+        Swal.fire(
+            '¡Mensaje Recibido!',
+            'Gracias por ponerte en contacto con nosotros.',
+            'success'
+        );
+        $('#form-div').fadeOut('slow');
+        $('#gracias').removeClass('d-none');
+    })
+    .catch((error) => {
+        $('#submitLoader').addClass('d-none');
+        Swal.fire(
+            'Ups!',
+            'Parece que algo salió mal. Intentalo otra vez.',
+            'error'
+        );
+    });
+});
+//Fin FETCH FORM

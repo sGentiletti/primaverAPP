@@ -3,11 +3,22 @@
 
 <head>
     <title>PrimaverApp | SeJu Turdera</title>
+    <meta name="title" content="PrimaverApp | SeJu Turdera">
+    <meta name="description" content="Gestioná tu tribu y conocé el estado de tu inscripción. Con la nueva aplicación de la Semana de la Juventud te convertís en un cacique con superpoderes.">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="PrimaverApp - La plataforma online de la Semana de la Juventud">
     <meta name="keywords" content="SeJu, semana de la juventud, turdera, buenos aires, comunidad, comunidades, seju">
+    <!-- Social Media -->
+    <meta property="og:title" content="PrimaverApp | SeJu Turdera">
+    <meta property="og:description" content="Gestioná tu tribu y conocé el estado de tu inscripción. Con la nueva aplicación de la Semana de la Juventud te convertís en un cacique con superpoderes.">
+    <meta property="og:image" content="https://app.sejuturdera.com.ar/img/thumbnail.jpg">
+    <meta property="og:url" content="https://app.sejuturdera.com.ar">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <!--  Non-Essential, But Recommended -->
+    <meta property="og:site_name" content="PrimaverApp | SeJu Turdera">
+    <meta name="twitter:image:alt" content="Website thumbnail">
 
     <!-- Font -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -21,6 +32,8 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <!-- Main css -->
     <link href="css/welcome.css" rel="stylesheet">
+    <!-- AlertCss -->
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
 </head>
 
 <body data-spy="scroll" data-target="#navbar" data-offset="30">
@@ -32,7 +45,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-dark navbar-expand-lg">
-                        <a class="navbar-brand" href="index.html"><img src="img/PrimaverApp.png" class="img-fluid" alt="logo"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+                        <a class="navbar-brand"><img src="img/logo.svg" width="150" class="img-fluid" alt="logo"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
                         <div class="collapse navbar-collapse" id="navbar">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item"> <a class="nav-link active" href="#home">INICIO <span class="sr-only">(current)</span></a> </li>
@@ -54,8 +67,8 @@
 
     <header class="bg-gradient" id="home">
         <div class="container mt-5">
-            <h1>La SeJu en tu bolsillo.</h1>
-            <p class="tagline">Una nueva experiencia para que disfrutes de la seju a distancia. <br>Sin instalar nada. </p>
+            <h1>Gestioná tu tribu.</h1>
+            <p class="tagline">Nunca fue tan fácil inscribirse en la SeJu. <br>Ya disponible. </p>
         </div>
         <div class="img-holder mt-3" id="vidbox">
             <video width="500" id="vid" autoplay muted>
@@ -125,9 +138,7 @@
                         <div>
                             <h2>Crear una tribu</h2>
                             <p class="lead">Para poder inscribirte, primero necesitás de una tribu. </p>
-                            <p>Una tribu es un grupo de entre 12 y 16 personas. Para poder inscribirse necesitas tener una tribu conformada y para ello son las preinscripciones.
-                            </p>
-                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati rerum assumenda vel aperiam eius illum temporibus, eveniet soluta officia dicta eaque voluptate ea in libero quaerat esse cumque expedita quidem?
+                            <p>Una tribu es un grupo de entre 12 y 16 personas, cumpliendo un mínimo de 6 mujeres y 6 varones. Para poder ser tribu, deberán pre inscribirse y cumplir los requisitos de las inscripciones, en tiempo y forma. Luego se les asignará un número que los identifique.
                             </p>
                         </div>
                         <img src="img/graphic.png" alt="graphic" class="img-fluid rounded align-self-start mr-lg-5 mb-5 mb-lg-0">
@@ -157,7 +168,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8 d-flex align-items-center">
+                <div class="col-md-12 d-flex align-items-center">
                     <ul class="list-unstyled ui-steps">
                         <li class="media">
                             <div class="circle-icon mr-4">1</div>
@@ -170,7 +181,7 @@
                             <div class="circle-icon mr-4">2</div>
                             <div class="media-body">
                                 <h5>Preinscripción</h5>
-                                <p>Agregá a tus amigos a la tribu, cuando estén todos listos, confirmala.</p>
+                                <p>Agregá a tus amigos a la tribu, cuando todos hayan verificado sus datos y esté todo listo, confirmala.</p>
                             </div>
                         </li>
                         <li class="media">
@@ -189,9 +200,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <img src="img/iphonex.png" alt="iphone" class="img-fluid">
-                </div>
+                
 
             </div>
 
@@ -220,7 +229,7 @@
     </div>
     <!-- // end .section --> 
 
-    <div class="section pt-0">
+    <div class="section pt-5">
         <div class="container">
             <div class="section-title">
                 <small>FAQ</small>
@@ -229,18 +238,16 @@
 
             <div class="row pt-4">
                 <div class="col-md-6">
-                    <h4 class="mb-3">¿Este año hay que pagar?</h4>
-                    <p class="light-font mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum, urna eu pellentesque pretium, nisi nisi fermentum enim, et sagittis dolor nulla vel sapien. Vestibulum sit amet mattis ante. </p>
-                    <h4 class="mb-3">¿Va a haber SeJu presencial?</h4>
-                    <p class="light-font mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum, urna eu pellentesque pretium, nisi nisi fermentum enim, et sagittis dolor nulla vel sapien. Vestibulum sit amet mattis ante. </p>
-
+                    <h4 class="mb-3">¿A quién está dirigida esta plataforma?</h4>
+                    <p class="light-font mb-5"><strong>PrimaverApp</strong> está dirigida a los caciques, para que gestionen su tribu durante las inscripciones. Los indios pueden utilizar la plataforma sólo para ver sus datos y corroborar el estado de su inscripción. </p>
+                    <h4 class="mb-3">¿Esto va a ser solo para la SeJu 48?</h4>
+                    <p class="light-font mb-5">Nuestro objetivo es facilitar el proceso de inscripción a distancia como respuesta a la pandemia de COVID-19. Si recibimos una respuesta positiva por parte de nuestra comunidad sobre la nueva plataforma podríamos extender su uso para los años subsiguientes, por eso es muy importante tu feedback, cualquier comentario que quieras hacernos, podes hacerlo siempre a través de nuestra plataforma o redes sociales. </p>
                 </div>
                 <div class="col-md-6">
                     <h4 class="mb-3">¿Necesito una computadora para participar?</h4>
-                    <p class="light-font mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum, urna eu pellentesque pretium, nisi nisi fermentum enim, et sagittis dolor nulla vel sapien. Vestibulum sit amet mattis ante. </p>
+                    <p class="light-font mb-5">Todas las actividades van a estar pensadas para adaptarse a cualquier dispositivo conectado a Internet. Creemos que hoy es una herramienta con la que la mayoría puede contar. </p>
                     <h4 class="mb-3">Tengo un problema, ¿Dónde me pongo en contacto con ustedes?</h4>
-                    <p class="light-font mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum, urna eu pellentesque pretium, nisi nisi fermentum enim, et sagittis dolor nulla vel sapien. Vestibulum sit amet mattis ante. </p>
-
+                    <p class="light-font mb-5">Podés contactarte con nosotros a través del formulario de contacto o nuestras redes sociales por cualquier duda o inconveniente que pudieses llegar a tener. </p>
                 </div>
             </div>
         </div>
@@ -251,7 +258,7 @@
 
 
     <div class="section bg-gradient">
-        <div class="container">
+        <div id="form-div" class="container">
             <div class="call-to-action">
 
                 <h2>Ponete en contacto con nosotros</h2>
@@ -261,21 +268,22 @@
                     <div class="col-sm-12 col-md-8">
                         <div class="card">
                             <div class="card-body text-left">
-                                <form>
+                                <form id="formulario">
+                                    @csrf
                                     <div class="form-group">
                                         <label style="color:#633991;">Nombre</label>
-                                        <input type="text" class="form-control" aria-describedby="name">
+                                        <input required name="nombre" type="text" class="form-control" aria-describedby="name">
                                       </div>
                                     <div class="form-group">
                                       <label style="color:#633991;">Correo Electrónico</label>
-                                      <input type="email" class="form-control" aria-describedby="email">
+                                      <input required name="email" type="email" class="form-control" aria-describedby="email">
                                       <small id="email" class="form-text text-muted">No compartiremos tu correo con nadie.</small>
                                     </div>
                                     <div class="form-group">
                                       <label style="color:#633991;">Mensaje:</label>
-                                      <textarea class="form-control" rows="3"></textarea>
+                                      <textarea required name="mensaje" class="form-control" rows="3"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                    <button type="submit" class="btn btn-primary">Enviar <span id="submitLoader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span></button>
                                   </form>
                             </div>
                         </div>
@@ -284,11 +292,17 @@
                 
             </div>
         </div>
+        <div id="gracias" class="container d-none">
+            <div class="call-to-action">
+                <h2>Gracias!</h2>
+                <p class="tagline">Tu mensaje fue recibido.</p>
+            </div>
+        </div>
 
     </div>
     <!-- // end .section -->
 
-    <div class="light-bg py-5" id="contact">
+    <div class="light-bg pt-5" id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 text-center text-lg-left">
@@ -308,7 +322,11 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-sm-12 d-flex justify-content-center">
+                    <img width="200" src="img/logo-gris.svg" alt="">
+                </div>
+            </div>
         </div>
 
     </div>
@@ -319,15 +337,13 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <!-- Plugins JS -->
     <script src="js/owl.carousel.min.js"></script>
+    <script src="js/sweetalert2.min.js"></script>
     <!-- Custom JS -->
     <script src="js/script.js"></script>
 
     <script>
     var viewportWidth = window.innerWidth;
     var video = $('#vid');
-
-    console.log(viewportWidth);
-    console.log(video);
 
     if (viewportWidth <= 500) {
         video.attr('width', '300');
@@ -344,7 +360,6 @@
         } else {
             $('#vidbox').addClass("d-none");
             $('#mockup').removeClass("d-none");
-            
         }
     }
     </script>
